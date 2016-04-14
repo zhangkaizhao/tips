@@ -1,0 +1,34 @@
+http://stackoverflow.com/questions/6718672/git-lost-commits
+
+To get your HEAD back in the right place:
+
+git reflog to get a list of where HEAD has been lately.
+git show sha1 to find the spot you want your HEAD to be.
+Once you find the commit you want,  git merge to get your master back into the right spot.
+Some explanation: In a git commit there is nothing pointing one commit to the one that happend after it. When you reset the HEAD, you pointed it to an older commit. Your previous head is now dangling without anything pointing to it.
+
+We use reflog to see where HEAD has been lately. Once it is set back to where you want it, you point the master, or some other, branch back to that spot and all is well!
+
+edited Jul 16 '11 at 17:15
+answered Jul 16 '11 at 16:29
+
+Andy
+
+===========
+http://gitready.com/advanced/2009/01/17/restoring-lost-commits.html
+
+We can prove that git knows about the commit still with the fsck command:
+
+    $ git fsck --lost-found
+      [... some blobs omitted ...]
+      dangling commit 7c61179cbe51c050c5520b4399f7b14eec943754
+
+You can also see the that git knows about the commit still by using the reflog command:
+
+    $ git reflog
+      39ba87b... HEAD@{0}: HEAD~1: updating HEAD
+      7c61179... HEAD@{1}: pull origin master: Fast forward
+      [... lots of other refs ...]
+
+=========
+https://www.kernel.org/pub/software/scm/git/docs/howto/revert-branch-rebase.html

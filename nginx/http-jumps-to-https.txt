@@ -1,0 +1,17 @@
+https://coding.net/u/linqun/pp/89639
+
+conf:
+
+    server {
+        listen 80;
+        server_name xxxxxxxxxx;
+        add_header Strict-Transport-Security "max-age=63072000; includeSubdomains; preload";
+        error_page 497 https://$host$request_uri;
+        return 497;
+    }
+
+HTTP status code:
+
+497 - normal request was sent to HTTPS
+
+by @linqun @wzw

@@ -1,0 +1,47 @@
+https://askubuntu.com/a/543761/467710
+
+Question
+========
+
+**How can I add text-to-speech to GoldenDict?**
+
+How can I add a text to speech service or any other similar services to GoldenDict for offline use?
+
+I am using Ubuntu 13.10 and I want to learn how to pronounce English words I don't know.
+
+---
+
+edited May 2 '14 at 4:21 Glutanimate
+
+asked Apr 30 '14 at 22:45 mohammed
+
+Answer
+======
+
+You can use the Programs tab to plug a text to speech software (`espeak <http://espeak.sourceforge.net/>` for example) into the golden dic.
+
+Here are the steps:
+
+1. Install espeak:
+
+    sudo apt-get install espeak
+
+2. Open GoldenDic and hit F3 to bring up the **Dictionaries** window (or select *Edit/Dictionaries* menu).
+
+3. On the **Sources** tab, select **Programs** tab.
+
+4. Click the **Add** button, select **Audio** for the *Type* column, enter **espeak** for the *Name*, and `espeak -v en %GDWORD%` for the *Command Line* column.
+
+5. Don't forget to check the *Enabled* box.
+
+6. Click OK
+
+7. Close the GoldenDic window and reopen it.
+
+Now you have an item named **espeak** in your dictionaries and your translation results. Clicking the speaker icon in front of the word in **espeak** result, reads the word for you.
+
+---
+
+edited Apr 9 '15 at 19:27
+
+answered Oct 30 '14 at 19:58 Mohammad Dehghan

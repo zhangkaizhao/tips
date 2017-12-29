@@ -1,0 +1,56 @@
+= Alexa computer topsites 2017
+
+https://www.alexa.com/topsites/category/Top/Computers
+
+2017,12,29
+
+1. google.com [search]
+2. www.youtube.com [video]
+3. facebook.com [social]
+4. mail.google.com [email]
+5. yahoo.com [portal]
+6. docs.google.com [document]
+7. en.wikipedia.org [wiki]
+8. twitter.com [social]
+9. search.yahoo.com [search]
+10. www.linkedin.com [job]
+11. mail.yahoo.com [email]
+12. www.bing.com [search]
+13. www.microsoft.com [company]
+14. imgur.com [picture]
+15. wordpress.com [blog]
+16. office.com [office]
+17. msn.com [portal]
+18. tumblr.com [blog]
+19. wikia.com [wiki]
+20. apple.com [company]
+21. paypal.com [payment]
+22. stackoverflow.com [programming]
+23. github.com [programming]
+24. www.pinterest.com [picture]
+25. adobe.com [company]
+26. play.google.com [android]
+27. www.dropbox.com [file]
+28. soundcloud.com [sound]
+29. ask.com [search]
+30. plus.google.com [social]
+31. www.mozilla.org [company]
+32. vimeo.com [video]
+33. salesforce.com [service][CRM]
+34. blogger.com [blog]
+35. mediafire.com [file]
+36. cnet.com [news]
+37. slideshare.net [presentation]
+38. wikihow.com [wiki]
+39. goddady.com [domain]
+40. support.microsoft.com [company]
+41. scribd.com
+42. mega.nz [file]
+43. speedtest.net
+44. huffingtonpost.com
+45. trello.com [collaboration]
+46. livejournal.com [blog]
+47. aol.com [portal]
+48. www.google.com/adsense/ [adversing]
+49. archive.org [www]
+50. xfinity.com

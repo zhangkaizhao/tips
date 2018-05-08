@@ -1,0 +1,35 @@
+# readelf
+
+$ main 1 readelf
+
+NAME
+       readelf - Displays information about ELF files.
+
+...
+
+OPTIONS
+
+...
+
+       -d
+       --dynamic
+           Displays the contents of the file's dynamic section, if it has one.
+
+...
+
+$ main 5 elf
+
+NAME
+       elf - format of Executable and Linking Format (ELF) files
+
+...
+
+NOTES
+       ELF first appeared in System V.  The ELF format is an adopted standard.
+
+       The  extensions  for e_phnum, e_shnum and e_strndx respectively are Linux extensions.  Sun, BSD and AMD64 also
+       support them; for further information, look under SEE ALSO.
+
+...
+
+via http://hgoldfish.com/blogs/article/107/

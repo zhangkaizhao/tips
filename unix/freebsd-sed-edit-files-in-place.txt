@@ -1,0 +1,20 @@
+# Using sed to edit files in place in FreeBSD
+
+The behavior of `sed` utility in FreeBSD is not all the same as in most of the GNU/Linux distributions.
+
+For example:
+
+```
+     Replace all occurances of ‘foo’ with ‘bar’ in the file test.txt, without
+     creating a backup of the file:
+
+           sed -i '' -e 's/foo/bar/g' test.txt
+```
+
+via `man 1 sed` in FreeBSD(11.2-RC2).
+
+In most of the GNU/Linux distributions, the simple way is:
+
+```
+sed -i 's/foo/bar/g' test.txt
+```

@@ -1,0 +1,51 @@
+# Remount read-only root filesystem to read-write in single mode in FreeBSD
+
+After system crashed, a `fsck` may be needed. (The root filesystem may be marked not unmount properly.)
+
+Boot in the single mode, by default the root filesystem is mounted as read-only.
+
+Run the `fsck` utility with `-y` option to fix errors:
+
+```
+fsck -y /dev/ada0p6
+```
+
+The `-y` option indicates:
+
+```
+     -y      Causes fsck to assume yes as the answer to all operator
+             questions.
+```
+
+via `main 8 fsck` in FreeBSD 11.2-RC2.
+
+After the `fsck` process finished, the root filesystem is marked as clean.
+
+And we can remount the root filesystem from read-only to read-write.
+
+Run the `mount` utility with `-u` option to remount it as read-write:
+
+```
+mount -u
+```
+
+The `-u` option indicates:
+
+
+```
+     -u      The -u flag indicates that the status of an already mounted file
+             system should be changed.  Any of the options discussed above
+             (the -o option) may be changed; also a file system can be changed
+             from read-only to read-write or vice versa.  An attempt to change
+             from read-write to read-only will fail if any files on the file
+             system are currently open for writing unless the -f flag is also
+             specified.  The set of options is determined by applying the
+             options specified in the argument to -o and finally applying the
+             -r or -w option.
+```
+
+via `man 8 mount` in FreeBSD 11.2-RC2.
+
+No files or directories in the root filesystem can be modified when the root filesystem is read-only.
+
+And remout it to read-write rescues your poor FreeBSD operating system. :-)

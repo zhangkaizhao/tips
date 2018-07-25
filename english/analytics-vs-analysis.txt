@@ -1,0 +1,37 @@
+# Analytics vs. analysis
+
+## wikipedia
+
+- https://en.wikipedia.org/wiki/Analytics
+
+Analytics is the discovery, interpretation, and communication of meaningful patterns in data. Especially valuable in areas rich with recorded information, analytics relies on the simultaneous application of statistics, computer programming and operations research to quantify performance.
+
+Organizations may apply analytics to business data to describe, predict, and improve business performance. Specifically, areas within analytics include predictive analytics, prescriptive analytics, enterprise decision management, descriptive analytics, cognitive analytics, Big Data Analytics, retail analytics, store assortment and stock-keeping unit optimization, marketing optimization and marketing mix modeling, web analytics, call analytics, speech analytics, sales force sizing and optimization, price and promotion modeling, predictive science, credit risk analysis, and fraud analytics. Since analytics can require extensive computation (see big data), the algorithms and software used for analytics harness the most current methods in computer science, statistics, and mathematics.[1]
+
+- https://en.wikipedia.org/wiki/Analytics#Analytics_vs._analysis
+
+Analysis is focused on understanding the past; what happened. Analytics focuses on why it happened and what will happen next.[2]
+
+Data analytics is multidisciplinary. There is extensive use of computer skills, mathematics and statistics, the use of descriptive techniques and predictive models to gain valuable knowledge from data.[citation needed]. The insights from data are used to recommend action or to guide decision making rooted in business context. Thus, analytics is not so much concerned with individual analyses or analysis steps, but with the entire methodology[according to whom?]. There is a pronounced tendency to use the term analytics in business settings e.g. text analytics vs. the more generic text mining to emphasize this broader perspective.[citation needed] There is an increasing use of the term advanced analytics,[citation needed] typically used to describe the technical aspects of analytics, especially in the emerging fields such as the use of machine learning techniques like neural networks, Decision Tree, Logistic Regression, linear to multiple regression analysis, Classification to do predictive modeling. It also includes Unsupervised Machine learning techniques like cluster analysis, Principal Component Analysis, segmentation profile analysis and association analysis.
+
+- https://en.wikipedia.org/wiki/Analysis
+
+ Analysis is the process of breaking a complex topic or substance into smaller parts in order to gain a better understanding of it. The technique has been applied in the study of mathematics and logic since before Aristotle (384–322 B.C.), though analysis as a formal concept is a relatively recent development.[1]
+
+The word comes from the Ancient Greek ἀνάλυσις (analysis, "a breaking up", from ana- "up, throughout" and lysis "a loosening").[2]
+
+As a formal concept, the method has variously been ascribed to Alhazen,[3] René Descartes (Discourse on the Method), and Galileo Galilei. It has also been ascribed to Isaac Newton, in the form of a practical method of physical discovery (which he did not name).
+
+## Quora
+
+https://www.quora.com/What-is-the-difference-between-Analytics-and-analysis-data-analytics/answer/Nikhil-Gulwade
+
+Answered Jan 25, 2017
+
+Analysis is separating out a whole into parts, study the parts individually and their relationships with one another.
+
+For example - if we have a whole data set and we are doing analysis on it means we pull sample data set from the whole data and then learn more about it and how it is related to the other samples.
+
+Analytics is the principle or logic that drives the analysis.
+
+For example - As mentioned in above example when we pull the sample and do analysis on it, the techniques or logic we are using to analyse the sample is analytics.

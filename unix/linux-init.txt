@@ -1,0 +1,19 @@
+= Linux init
+
+2018,03,14
+
+LINUX PID 1 和 SYSTEMD
+https://coolshell.cn/articles/17998.html
+
+浅析 Linux 初始化 init 系统，第 1 部分
+sysvinit
+https://www.ibm.com/developerworks/cn/linux/1407_liuming_init1/index.html
+
+浅析 Linux 初始化 init 系统，第 2 部分
+UpStart
+https://www.ibm.com/developerworks/cn/linux/1407_liuming_init2/index.html
+
+浅析 Linux 初始化 init 系统，第 3 部分
+Systemd
+https://www.ibm.com/developerworks/cn/linux/1407_liuming_init3/index.html
+

@@ -1,0 +1,17 @@
+# reStructuredText strip
+
+多余的空格和换行可通过反斜杠\转义来消除。例如：
+
+```
+Idris 社区规范\
+在\ `此处
+<https://www.idris-lang.org/documentation/community-standards/>`_\ 声明。
+```
+
+会被渲染为：
+
+Idris 社区规范在此处声明。
+
+via https://github.com/Idris-zh/Idris-dev/issues/10#issuecomment-377326420
+
+2018,04,15

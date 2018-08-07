@@ -1,0 +1,9 @@
+# inxi
+
+```
+inxi -Fxz
+```
+
+via https://community.ubuntu.com/t/new-ubuntu-unity-iso/2146/34
+
+: 2018-07-08

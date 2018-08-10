@@ -1,0 +1,15 @@
+# git --bare clone analogue for Hg (Mercurial)
+
+https://stackoverflow.com/a/43173600/3449199
+
+I don't use Mercurial, but from the help I'd say the nearest you will get is
+
+> -U --noupdate the clone will include an empty working directory (only a repository)
+
+*Update as per answer of @Ry4anBrase*:
+
+For an existing repository hg update null deletes all local files. This checks out the null revision, which is the revision before revision 0, and contains no files. If you check out that revision you local files go away and you've got a bare clone as a result.
+
+edited Apr 3 '17 at 8:06
+answered Apr 2 '17 at 21:12
+Vampire https://stackoverflow.com/users/589329/vampire

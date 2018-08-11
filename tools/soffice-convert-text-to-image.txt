@@ -1,0 +1,14 @@
+# How to transform a text file into a picture
+
+https://unix.stackexchange.com/a/373971
+
+You could use openoffice (libreoffice) to do it.
+
+```
+soffice --convert-to jpg "Textfile.doc"
+```
+
+it works with text files too.
+
+answered Jun 28 '17 at 16:41
+Admiral Smith https://unix.stackexchange.com/users/238187/admiral-smith

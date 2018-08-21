@@ -1,0 +1,18 @@
+# Test-only dependencies
+
+Use `dev-dependencies`. From the [Cargo docs](https://doc.rust-lang.org/cargo/reference/specifying-dependencies.html#development-dependencies):
+
+> You can add a `[dev-dependencies]` section to your `Cargo.toml` whose format is equivalent to `[dependencies]`:
+>
+> ```
+> [dev-dependencies]
+> tempdir = "0.3"
+> ```
+>
+> Dev-dependencies are not used when compiling a package for building, but are used for compiling tests, examples, and benchmarks.
+
+answered Apr 24 '15 at 21:06
+edited Mar 2 at 22:21
+Shepmaster https://stackoverflow.com/users/155423/shepmaster
+
+via https://stackoverflow.com/a/29857478/3449199

@@ -1,0 +1,87 @@
+# Default value for optional argument
+
+---
+
+Default Function Arguments in Rust
+https://stackoverflow.com/a/35369909/3449199
+
+Since default arguments are not supported you can get a similar behavior using `Option<T>`
+
+```
+fn add(a: Option<i32>, b: Option<i32>) -> i32 {
+    a.unwrap_or(1) + b.unwrap_or(2)
+}
+```
+
+This accomplishes the objective of having the default value and the function coded only once (instead of in every call), but is of course a whole lot more to type out. The function call will look like `add(None, None)`, which you may or may not like depending on your perspective.
+
+If you see typing nothing in the argument list as the coder potentially forgetting to make a choice then the big advantage here is in explicitness; the caller is explicitly saying they want to go with your default value, and will get a compile error if they put nothing. Think of it as typing `add(DefaultValue, DefaultValue)`.
+
+UPDATE:
+
+You could also use a macro!
+
+```
+fn add(a: i32, b: i32) -> i32 { a + b }
+
+macro_rules! add {
+    ($a: expr) => { add($a, 2) };
+    () => { add(1, 2) }
+}
+
+assert_eq!(add!(), 3);
+assert_eq!(add!(4), 6);
+```
+
+The big difference between the two solutions is that with "Option"-al arguments it is completely valid to write `add(None, Some(4))`, but with the macro pattern matching you cannot (this is similar to Python's default argument rules).
+
+answered Feb 12 '16 at 18:41
+edited May 21 '16 at 0:06
+ampron https://stackoverflow.com/users/1217063/ampron
+
+---
+
+Optional arguments in Rust 1.12
+http://xion.io/post/code/rust-optional-args.html
+
+Until now, a function defined like this:
+
+```
+fn maybe_plus_5(x: Option<i32>) -> i32 {
+    x.unwrap_or(0) + 5
+}
+```
+
+was the closest Rust had to default argument values. While this works perfectly — and is bolstered by compile-time checks! — callers are unfortunately required to build the `Option` objects manually:
+
+```
+let _ = maybe_plus_5(Some(42));  // OK
+let _ = maybe_plus_5(None);      // OK
+let _ = maybe_plus_5(42);        // error!
+```
+
+After `Option<T>` implements `From<T>`, however, this can change for the better. *Much* better, in fact, for the last line above can be made valid. All that is necessary is to take advantage of this new `impl` in the function definition:
+
+```
+fn maybe_plus_5<T>(x: T) -> i32 where Option<i32>: From<T> {
+    Option::from(x).unwrap_or(0) + 5
+}
+```
+
+Unfortunately, this results in quite a bit of complexity, up to and including the `where` clause: a telltale sign of convoluted, generic code. Still, this trade-off may be well worth it, as a function defined once can be called many times throughout the code base, and possibly across multiple crates if it’s a part of the public API.
+
+But we can do better than this. Indeed, using the `From` trait to constrain argument types is just complicating things for no good reason. What we should so instead is use the symmetrical trait, `Into`, and take advantage of its standard `impl`:
+
+```
+impl<T, U> Into<U> for T where U: From<T>
+```
+
+Once we translate it to the `Option` case (now that `Option<T>` implements `From<T>`), we can switch the trait bounds around and get rid of the `where` clause completely:
+
+```
+fn maybe_plus_5<T: Into<Option<i32>>>(x: T) -> i32 {
+    x.into().unwrap_or(0) + 5
+}
+```
+
+As a small bonus, the function body has also gotten a little simpler.

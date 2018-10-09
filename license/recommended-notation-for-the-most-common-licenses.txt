@@ -1,0 +1,24 @@
+# Licenses
+
+https://poetry.eustace.io/docs/pyproject/#license
+
+The recommended notation for the most common licenses is (alphabetical):
+
+* Apache-2.0
+* BSD-2-Clause
+* BSD-3-Clause
+* BSD-4-Clause
+* GPL-2.0
+* GPL-2.0+
+* GPL-3.0
+* GPL-3.0+
+* LGPL-2.1
+* LGPL-2.1+
+* LGPL-3.0
+* LGPL-3.0+
+* MIT
+
+Optional, but it is highly recommended to supply this.
+More identifiers are listed at the [SPDX Open Source License Registry](https://www.spdx.org/licenses/).
+
+2018-10-09

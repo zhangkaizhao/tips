@@ -26,7 +26,7 @@ And we can remount the root filesystem from read-only to read-write.
 Run the `mount` utility with `-u` option to remount it as read-write:
 
 ```
-mount -u
+mount -u -o rw /
 ```
 
 The `-u` option indicates:

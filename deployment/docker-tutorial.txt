@@ -1,0 +1,48 @@
+# Docker tutorial
+
+2018-10-17
+
+Source: https://www.ruanyifeng.com/blog/2018/02/docker-tutorial.html
+
+```
+docker image ls
+```
+
+```
+docker image rm [image_name]
+```
+
+```
+docker container ls --all
+```
+
+```
+docker container rm [container_id]
+```
+
+```
+docker image build -t [image_name] .
+```
+
+```
+docker container run -p 8000:3000 -it [image_name] /bin/bash
+```
+
+```
+docker container run -p 8000:3000 -it [image_name]
+```
+
+```
+docker container kill [container_id]
+```
+
+```
+FROM node:8.4
+COPY . /app
+WORKDIR /app
+RUN npm install --registry=https://registry.npm.taobao.org
+EXPOSE 3000
+CMD node app.js
+```
+
+...

@@ -1,0 +1,77 @@
+# TeX Live
+
+2018-10-19
+
+source: https://en.wikibooks.org/wiki/LaTeX/Installation#Custom_installation_with_TeX_Live
+
+## Plain TeX
+
+```
+wget http://mirror.ctan.org/systems/texlive/tlnet/install-tl-unx.tar.gz
+tar xvf install-tl-unx.tar.gz
+cd install-tl-*
+./install-tl gui
+```
+
+Put binary dir in `$PATH`, Portable setup for example:
+
+```
+export PATH=/usr/local/texlive/2018/bin/x86_64-linux:$PATH
+```
+
+Plain tex test:
+
+```
+tex '\empty Hello world!\bye'
+pdftex '\empty Hello world!\bye'
+```
+
+Configuration:
+
+```
+tlmgr option
+```
+
+```
+tlmgr option srcfiles 1
+tlmgr option docfiles 0
+tlmgr paper letter
+```
+
+Help:
+
+```
+tlmgr help
+```
+
+## LaTeX
+
+``
+tlmgr install latex latex-bin latexconfig latex-fonts
+```
+
+Other interesting packages:
+
+```
+tlmgr install amsmath babel carlisle ec geometry graphics hyperref lm  marvosym oberdiek parskip graphics-def url
+```
+
+* amsmath       The essentials for math typesetting.
+* babel         Internationalization support.
+* carlisle      Bundle package required for some babel features.
+* ec            Required for T1 encoding.
+* geometry      For page layout.
+* graphics      The essentials to import graphics.
+* hyperref      PDF bookmarks, PDF followable links, link style, TOC links, etc.
+* lm            One of the best Computer Modern style font available for several font encodings (such as T1).
+* marvosym      Several symbols, such as the official euro.
+* oberdiek      Bundle package required for some geometry features.
+* parskip       Let you configure paragraph breaks and indents properly.
+* graphics-def  Required for some graphics features.
+* url           Required for some hyperref features.
+
+Hyphenation:
+
+```
+tlmgr install hyphen-{finnish,sanskrit}
+```

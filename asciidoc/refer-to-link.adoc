@@ -1,0 +1,88 @@
+= Refer to link
+:link-ecosia: https://ecosia.org[Ecosia]
+:1: https://asciidoctor.org[Asciidoctor]
+:url-home: https://asciidoctor.org
+:checkedbox: pass:normal[{startsb}&#10004;{endsb}]
+:link-asn1: https://en.wikipedia.org/wiki/Abstract_Syntax_Notation_One[^↝^]
+
+ = Refer to link
+ :link-ecosia: https://ecosia.org[Ecosia]
+ :1: https://asciidoctor.org[Asciidoctor]
+ :url-home: https://asciidoctor.org
+ :checkedbox: pass:normal[{startsb}&#10004;{endsb}]
+ :link-asn1: https://en.wikipedia.org/wiki/Abstract_Syntax_Notation_One[^↝^]
+
+2018-11-09
+
+== How to refer to link? #2581
+https://github.com/asciidoctor/asciidoctor/issues/2581
+
+- Use attributes in Asciidoctor:
+
+ I search using {link-ecosia}.
+
+Result:
+
+I search using {link-ecosia}.
+
+- Numbers can be used as attributes too in Asciidoctor:
+
+ You can't go wrong with {1}.
+
+Result:
+
+You can't go wrong with {1}.
+
+- More examples from references:
+
+1.
+
+ Check out {url-home}[Asciidoctor]!
+
+Result:
+
+Check out {url-home}[Asciidoctor]!
+
+2.
+
+ {checkedbox} That's done!
+
+Result:
+
+{checkedbox} That's done!
+
+== No whitespace between text and link #815
+https://github.com/asciidoctor/asciidoctor.org/issues/815
+
+- Use attribute in Asciidoctor is better but not working now:
+
+ ASN.1{link-asn1}
+
+Result:
+
+ASN.1{link-asn1}
+
+- Working when no whitespace:
+
+ {link-asn1}
+
+Result:
+
+{link-asn1}
+
+- Working solution using `link:`:
+
+ ASN.1link:https://en.wikipedia.org/wiki/Abstract_Syntax_Notation_One[^↝^]
+
+Result:
+
+ASN.1link:https://en.wikipedia.org/wiki/Abstract_Syntax_Notation_One[^↝^]
+
+which is not so good.
+
+---
+References:
+
+https://asciidoctor.org/docs/asciidoc-syntax-quick-reference/#attributes-and-substitutions
+
+https://asciidoctor.org/docs/user-manual/#setting-attributes-on-a-document

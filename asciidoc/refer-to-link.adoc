@@ -4,6 +4,7 @@
 :url-home: https://asciidoctor.org
 :checkedbox: pass:normal[{startsb}&#10004;{endsb}]
 :link-asn1: https://en.wikipedia.org/wiki/Abstract_Syntax_Notation_One[^↝^]
+:ASN1-link: link:https://en.wikipedia.org/wiki/Abstract_Syntax_Notation_One[^↝^]
 
  = Refer to link
  :link-ecosia: https://ecosia.org[Ecosia]
@@ -11,6 +12,7 @@
  :url-home: https://asciidoctor.org
  :checkedbox: pass:normal[{startsb}&#10004;{endsb}]
  :link-asn1: https://en.wikipedia.org/wiki/Abstract_Syntax_Notation_One[^↝^]
+ :ASN1-link: link:https://en.wikipedia.org/wiki/Abstract_Syntax_Notation_One[^↝^]
 
 2018-11-09
 
@@ -79,6 +81,16 @@ Result:
 ASN.1link:https://en.wikipedia.org/wiki/Abstract_Syntax_Notation_One[^↝^]
 
 which is not so good.
+
+And we can make it as a attribute:
+
+ ASN.1{ASN1-link}
+
+Result:
+
+ASN.1{ASN1-link}
+
+Works!
 
 ---
 References:

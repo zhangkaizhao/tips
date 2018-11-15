@@ -1,0 +1,123 @@
+# PEP 440 -- Version Identification ...
+
+https://www.python.org/dev/peps/pep-0440/
+
+2018-11-15
+
+
+## Version scheme
+
+### Public version identifiers
+
+The canonical public version identifiers MUST comply with the following scheme:
+
+[N!]N(.N)*[{a|b|rc}N][.postN][.devN]
+
+Public version identifiers are separated into up to five segments:
+
+* Epoch segment: N!
+* Release segment: N(.N)*
+* Pre-release segment: {a|b|rc}N
+* Post-release segment: .postN
+* Development release segment: .devN
+
+Any given release will be a "final release", "pre-release", "post-release" or "developmental release" as defined in the following sections.
+
+### Local version identifiers
+
+Local version identifiers MUST comply with the following scheme:
+
+<public version identifier>[+<local version label>]
+
+To ensure local version identifiers can be readily incorporated as part of filenames and URLs, and to avoid formatting inconsistencies in hexadecimal hash representations, local version labels MUST be limited to the following set of permitted characters:
+
+* ASCII letters ([a-zA-Z])
+* ASCII digits ([0-9])
+* periods (.)
+
+Local version labels MUST start and end with an ASCII letter or digit.
+
+
+## Examples of compliant version schemes
+
+Simple "major.minor" versioning:
+
+0.1
+0.2
+0.3
+1.0
+1.1
+...
+
+Simple "major.minor.micro" versioning:
+
+1.1.0
+1.1.1
+1.1.2
+1.2.0
+...
+
+"major.minor" versioning with alpha, beta and candidate pre-releases:
+
+0.9
+1.0a1
+1.0a2
+1.0b1
+1.0rc1
+1.0
+1.1a1
+...
+
+"major.minor" versioning with developmental releases, release candidates and post-releases for minor corrections:
+
+0.9
+1.0.dev1
+1.0.dev2
+1.0.dev3
+1.0.dev4
+1.0c1
+1.0c2
+1.0
+1.0.post1
+1.1.dev1
+...
+
+Date based releases, using an incrementing serial within each year, skipping zero:
+
+2012.1
+2012.2
+2012.3
+...
+2012.15
+2013.1
+2013.2
+...
+
+
+## Compatibility with other version schemes
+
+### Semantic versioning
+
+Semantic versioning [10] is a popular version identification scheme that is more prescriptive than this PEP regarding the significance of different elements of a release number. Even if a project chooses not to abide by the details of semantic versioning, the scheme is worth understanding as it covers many of the issues that can arise when depending on other distributions, and when publishing a distribution that others rely on.
+
+The "Major.Minor.Patch" (described in this PEP as "major.minor.micro") aspects of semantic versioning (clauses 1-9 in the 2.0.0-rc-1 specification) are fully compatible with the version scheme defined in this PEP, and abiding by these aspects is encouraged.
+
+Semantic versions containing a hyphen (pre-releases - clause 10) or a plus sign (builds - clause 11) are not compatible with this PEP and are not permitted in the public version field.
+
+One possible mechanism to translate such semantic versioning based source labels to compatible public versions is to use the .devN suffix to specify the appropriate version order.
+
+Specific build information may also be included in local version labels.
+
+### DVCS based version labels
+
+Many build tools integrate with distributed version control systems like Git and Mercurial in order to add an identifying hash to the version identifier. As hashes cannot be ordered reliably such versions are not permitted in the public version field.
+
+As with semantic versioning, the public .devN suffix may be used to uniquely identify such releases for publication, while the original DVCS based label can be stored in the project metadata.
+
+Identifying hash information may also be included in local version labels.
+
+## Summary of differences from pkg_resources.parse_version
+
+Local versions sort differently, this PEP requires that they sort as greater than the same version without a local version, whereas pkg_resources.parse_version considers it a pre-release marker.
+This PEP purposely restricts the syntax which constitutes a valid version while pkg_resources.parse_version attempts to provide some meaning from any arbitrary string.
+pkg_resources.parse_version allows arbitrarily deeply nested version signifiers like 1.0.dev1.post1.dev5. This PEP however allows only a single use of each type and they must exist in a certain order.

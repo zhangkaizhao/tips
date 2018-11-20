@@ -1,0 +1,19 @@
+# dict.keys(), dict.values() and dict.items()
+
+https://twitter.com/1st1/status/1064572563509121024
+
+by Yury Selivanov 2018-11-20
+
+Python dict.keys(), dict.items(), and dict.values() feature a lot of functionality that isn't commonly known and used.  I also keep forgetting that they are more than just iterables.  For example:
+
+1. dict.keys() and friends are *dict view objects*.  They are iterables, but *not* generators or iterators.  That means that you can iterate over them multiple times:  "k = dict.keys(); print(list(k), list(k))" will print all keys 2 times.
+
+2. Dict views are set-like objects and support *set* operations: "d1.keys() & d2.keys()" --set of keys that present in both d1 and d2 dicts.
+
+3. Dict views have lengths: "len(d.keys()) == len(d)" and support membership operations: "somekey in d.keys()"; or even "d1.keys() == d2.keys()".
+
+Read more about dict view objects in PEP 3106.
+
+---
+PEP 3106 -- Revamping dict.keys(), .values() and .items()
+https://www.python.org/dev/peps/pep-3106/

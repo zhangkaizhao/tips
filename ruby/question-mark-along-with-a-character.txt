@@ -1,0 +1,33 @@
+# Question mark along with a character
+
+2018-12-07
+
+https://stackoverflow.com/a/1878406/3449199
+
+Also note `?` along with a character, will return the ASCII character code for `A`
+
+For example:
+
+```ruby
+?F # => will return 70
+```
+
+Alternately in ruby 1.8 you can do:
+
+```ruby
+"F"[0]
+```
+
+or in ruby 1.9:
+
+```ruby
+"F".ord
+```
+
+Also notice that `?F` will return the string `"F"`, so in order to make the code shorter, you can also use `?F.ord` in Ruby 1.9 to get the same result as `"F".ord`.
+
+answered Dec 10 '09 at 3:07
+[Greg Osuri](https://stackoverflow.com/users/228480/greg-osuri)
+
+edited Mar 2 '16 at 1:48
+[Ogrish Man](https://stackoverflow.com/users/170931/ogrish-man)

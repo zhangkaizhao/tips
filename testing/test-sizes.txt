@@ -1,0 +1,20 @@
+# Test sizes
+
+Source: https://testing.googleblog.com/2010/12/test-sizes.html
+
+-------------------------------------------------------
+Feature                 Small   Medium          Large
+=======================================================
+Network access          No      localhost only  Yes
+Database                No      Yes             Yes
+File system access      No      Yes             Yes
+Use external systems    No      Discouraged     Yes
+Multiple threads        No      Yes             Yes
+Sleep statements        No      Yes             Yes
+System properties       No      Yes             Yes
+Time limit (seconds)    60      300             900+
+-------------------------------------------------------
+
+More: https://testing.googleblog.com/2011/03/how-google-tests-software-part-five.html
+
+2018-12-25

@@ -1,0 +1,9 @@
+# uniq count and numeric sort
+
+via https://twitter.com/tenderlove/status/1107717972947136517
+
+Like this:
+
+```sh
+cat abc.txt | sort | uniq -c | sort -n
+```

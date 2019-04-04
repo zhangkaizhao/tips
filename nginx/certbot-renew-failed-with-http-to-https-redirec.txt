@@ -1,0 +1,25 @@
+# Renewal failed with HTTP to HTTTPS redirection #3361
+
+https://github.com/certbot/certbot/issues/3361#issuecomment-278799548
+
+Workaround by https://github.com/mehov :
+
+```
+server {
+    listen 443 ssl;
+    # relevant https configuration
+    location /.well-known/acme-challenge/ {
+        return 301 http://$server_name$request_uri;
+    }
+}
+server {
+    listen 80;
+    # relevant http configuration
+    location / {
+        return 301 https://$server_name$request_uri;
+    }
+    location /.well-known/acme-challenge/ {}
+}
+```
+
+> Not obvious: the order of the sever directives is important.

@@ -1,0 +1,61 @@
+# Install Nix in Arch Linux
+
+2019-04-04
+
+https://github.com/NixOS/nix/issues/879#issuecomment-410904367
+
+[steve-chavez](https://github.com/steve-chavez) commented on 7 Aug 2018
+
+Thanks to the [pointer by kyrias](https://gist.github.com/expipiplus1/e571ce88c608a1e83547c918591b149f#gistcomment-2666077), I managed to make nix work in ArchLinux with:
+
+```
+sudo pacman -S rsync
+bash <(curl https://nixos.org/nix/install) --daemon
+# After finishing the installer there's this message:
+# Before Nix will work in your existing shells, you'll need to close
+# them and open them again. Other than that, you should be ready to go.
+
+# Try it! Open a new terminal, and type:
+
+#  $ nix-shell -p nix-info --run "nix-info -m"
+
+# But the nix commands were not added to my PATH, did a:
+source /etc/profile.d/nix.sh
+# and all working good now, added that to my .bashrc as well
+```
+
+----
+
+2019-04-13
+
+https://nixos.org/nix/
+
+> On Linux and macOS, the easiest way to install Nix is to run the following shell command (as a user other than root):
+> ```sh
+> curl https://nixos.org/nix/install | sh
+> ```
+> This script will download a distribution-independent binary tarball containing Nix and its dependencies, and unpack it in /nix.
+
+Error: cloning builder process: Operation not permitted installing Nix 2.2.1 in (Arch) Linux #2633
+https://github.com/NixOS/nix/issues/2633
+
+https://github.com/NixOS/nix/issues/2633#issuecomment-455788240
+
+> I had the same problem. I think it has something to do with archlinux not having kernel user namespaces enabled. Doing
+> `sysctl kernel.unprivileged_userns_clone=1`
+> Seems to have fixed the issue.
+>
+> See [this archlinux forum post](https://bbs.archlinux.org/viewtopic.php?id=232779)
+> I think this issue is likely related to (at least) [#2632](https://github.com/NixOS/nix/issues/2632), [#2636](https://github.com/NixOS/nix/issues/2636)
+
+https://github.com/NixOS/nix/issues/2633#issuecomment-456407434
+
+> I think it might work without `nprivileged_userns_clone` if you disable sandboxing in `nix.conf`, but I wouldn't recommend that, as some packages tend to e.g. discover `/usr/lib/*` and use them.
+
+https://github.com/NixOS/nix/issues/2633#issuecomment-480536760
+
+> I think it is also important to note that the unprivileged_userns_clone flag is a Debian invention that was not upstreamed and will not exist on all systems, see for example this article on lwn.net.
+> On CentOS 6 for example I had to change a different flag:
+> ```
+> echo 10000 > /proc/sys/user/max_user_namespaces
+> ```

@@ -1,0 +1,9 @@
+# Variable declaration - both case- and underscore-insensitive and exception
+
+https://narimiran.github.io/nim-basics/#_variable_declaration
+
+> Note however that Nim is both case- and underscore-insensitive meaning that helloWorld and hello_world would be the same name. The exception to this is the first character, which is case-sensitive. Names can also include both numbers and other UTF-8 characters, even emojis should you wish that, but keep in mind you and possibly others will have to type them.
+
+I do think this is weird.
+
+2019-04-15

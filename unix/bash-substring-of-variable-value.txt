@@ -1,8 +1,8 @@
 # Substring of variable value in Bash
 
-via https://stackoverflow.com/a/14992694/3449199
-
 ---
+
+via https://stackoverflow.com/a/14992694/3449199
 
 If the variable is: `FOO="qwertzuiopasdfghjklyxcvbnm"`
 
@@ -16,3 +16,34 @@ will give the first 10 characters.
 
 answered Feb 21 '13 at 0:43
 P.P. https://stackoverflow.com/users/1275169/p-p
+
+---
+
+via https://stackoverflow.com/a/428580/3449199
+
+If x is constant, the following parameter expansion performs substring extraction:
+
+```bash
+b=${a:12:5}
+```
+
+where 12 is the offset (zero-based) and 5 is the length
+
+If the underscores around the digits are the only ones in the input,
+you can strip off the prefix and suffix (respectively) in two steps:
+
+```bash
+tmp=${a#*_}   # remove prefix ending in "_"
+b=${tmp%_*}   # remove suffix starting with "_"
+```
+
+If there are other underscores, it's probably feasible anyway, albeit more tricky.
+If anyone knows how to perform both expansions in a single expression, I'd like to know too.
+
+Both solutions presented are pure bash, with no process spawning involved, hence very fast.
+
+edited Oct 12 '16 at 17:54
+GreenGiant https://stackoverflow.com/users/539048/greengiant
+
+answered Jan 9 '09 at 15:52
+JB. https://stackoverflow.com/users/12274/jb

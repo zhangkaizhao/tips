@@ -34,29 +34,31 @@ You seem to be confused because “runtime” is both a noun and an adjective. Y
 question asks about the three distinct concepts of the “run-time environment”,
 the “language runtime”, and “run-time linking”:
 
-As a noun, the “run-time environment” of a program, or phrased differently: the
-“environment of a process”, refers to the (changing) state of the outside
+As a noun, the “**run-time environment**” of a program, or phrased differently:
+the “environment of a process”, refers to the (changing) state of the outside
 world. This state is most obviously accessible and modifiable by doing I/O,
 such as reading or writing {from,to} {terminals,files,block devices,network
 sockets}.  The environment can also include concepts such as the “current
 working directory” or “environment variables”.
 
-As a noun, a runtime of a programming language refers to the part of a language
-implementation that provides run-time semantics. This is most visible in
-interpreted implementations, where the interpreter is the runtime. But standard
-library functions can also be part of the runtime, such as malloc in C.
+As a noun, a **runtime of a programming language** refers to the part of a
+language implementation that provides run-time semantics. This is most visible
+in interpreted implementations, where the interpreter is the runtime. But
+standard library functions can also be part of the runtime, such as `malloc` in
+C.
 
 Some parts of the runtime might be compiled into the program rather than being
 accessible via a library. The way how destructors are invoked in C++ would be
 an example of this – the compiler inserts instructions to destroy stack objects
 when their scope is left, and instructions to destroy member variables when a
 class instance is destroyed. Another example of runtime-supplied code is the
-program entry point, which is not int main(). How the entry point is determined
-depends on the executable format. But at that real entry point, the compiler
+program entry point, which is not `int main()`. How the entry point is
+determined depends on the executable format. But at that real entry point, the
+compiler
 will have emitted code that e.g. takes care of initializing static members.
-This code will then invoke the programmer-supplied main(), but that may be
+This code will then invoke the programmer-supplied `main()`, but that may be
 non-trivial in itself. E.g. in C++ this implies dealing with uncaught
-exceptions, whereas Java has to also spawn the main thread. After main()
+exceptions, whereas Java has to also spawn the main thread. After `main()`
 returns, the runtime has to perform various cleanup, and then communicate the
 exit code to the OS and terminate the process. Note that complex systems such
 as languages or frameworks implemented on top of C add more layers to finding
@@ -70,7 +72,7 @@ and its extensions such as POSIX is to abstract over these syscalls and other
 system-specific details, so that the interface provided by the OS is totaly
 subsumed by the language runtime interface.
 
-As an adjective, “runtime” in “run-time linking” is used to differentiate
+As an adjective, “runtime” in “**run-time linking**” is used to differentiate
 dynamic linking from static linking. In nearly all computer-science contexts,
 the word “dynamic” can be substituted for “run-time” to get the intended
 meaning. Misusing Ancient Greek words is way cooler than using boring olde

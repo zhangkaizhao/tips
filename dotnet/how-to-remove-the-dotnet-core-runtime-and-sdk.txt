@@ -1,0 +1,45 @@
+How to remove the .NET Core Runtime and SDK
+https://docs.microsoft.com/en-us/dotnet/core/versions/remove-runtime-sdk-versions?tabs=macos
+
+07/28/2018
+
+(Following is the part for macOS.)
+
+Determine what is installed
+
+$ dotnet --list-sdks
+1.0.1 [/usr/local/share/dotnet/sdk]
+1.0.4 [/usr/local/share/dotnet/sdk]
+2.0.0-preview1-005977 [/usr/local/share/dotnet/sdk]
+2.0.0-preview2-006497 [/usr/local/share/dotnet/sdk]
+2.0.0 [/usr/local/share/dotnet/sdk]
+2.1.4 [/usr/local/share/dotnet/sdk]
+2.1.300-preview2-008530 [/usr/local/share/dotnet/sdk]
+2.1.300 [/usr/local/share/dotnet/sdk]
+2.1.301 [/usr/local/share/dotnet/sdk]
+
+$ dotnet --list-runtimes
+Microsoft.AspNetCore.All 2.1.0-preview2-final [/usr/local/share/dotnet/shared/Microsoft.AspNetCore.All]
+Microsoft.AspNetCore.All 2.1.0 [/usr/local/share/dotnet/shared/Microsoft.AspNetCore.All]
+Microsoft.AspNetCore.All 2.1.1 [/usr/local/share/dotnet/shared/Microsoft.AspNetCore.All]
+Microsoft.AspNetCore.App 2.1.0-preview2-final [/usr/local/share/dotnet/shared/Microsoft.AspNetCore.App]
+Microsoft.AspNetCore.App 2.1.0 [/usr/local/share/dotnet/shared/Microsoft.AspNetCore.App]
+Microsoft.AspNetCore.App 2.1.1 [/usr/local/share/dotnet/shared/Microsoft.AspNetCore.App]
+Microsoft.NETCore.App 1.0.4 [/usr/local/share/dotnet/shared/Microsoft.NETCore.App]
+Microsoft.NETCore.App 1.0.5 [/usr/local/share/dotnet/shared/Microsoft.NETCore.App]
+Microsoft.NETCore.App 1.1.1 [/usr/local/share/dotnet/shared/Microsoft.NETCore.App]
+Microsoft.NETCore.App 1.1.2 [/usr/local/share/dotnet/shared/Microsoft.NETCore.App]
+Microsoft.NETCore.App 2.0.0-preview1-002111-00 [/usr/local/share/dotnet/shared/Microsoft.NETCore.App]
+Microsoft.NETCore.App 2.0.0-preview2-25407-01 [/usr/local/share/dotnet/shared/Microsoft.NETCore.App]
+Microsoft.NETCore.App 2.0.0 [/usr/local/share/dotnet/shared/Microsoft.NETCore.App]
+Microsoft.NETCore.App 2.0.5 [/usr/local/share/dotnet/shared/Microsoft.NETCore.App]
+Microsoft.NETCore.App 2.1.0-preview2-26406-04 [/usr/local/share/dotnet/shared/Microsoft.NETCore.App]
+Microsoft.NETCore.App 2.1.0 [/usr/local/share/dotnet/shared/Microsoft.NETCore.App]
+Microsoft.NETCore.App 2.1.1 [/usr/local/share/dotnet/shared/Microsoft.NETCore.App]
+
+Uninstalling .NET Core
+
+sudo rm -rf /usr/local/share/dotnet/sdk/1.0.1
+sudo rm -rf /usr/local/share/dotnet/shared/Microsoft.NETCore.App/1.0.1
+sudo rm -rf /usr/local/share/dotnet/shared/Microsoft.AspNetCore.App/1.0.1
+sudo rm -rf /usr/local/share/dotnet/host/fxr/1.0.1

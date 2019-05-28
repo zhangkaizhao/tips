@@ -1,0 +1,28 @@
+Split string by delimiter and get N-th element
+
+https://unix.stackexchange.com/questions/312280/split-string-by-delimiter-and-get-n-th-element
+
+---
+
+via https://unix.stackexchange.com/a/312281/126066
+
+Using cut:
+
+    A="$(cut -d'_' -f2 <<<'one_two_three_four_five')"
+    B="$(cut -d'_' -f4 <<<'one_two_three_four_five')"
+
+    A="$(echo 'one_two_three_four_five' | cut -d'_' -f2)"
+    B="$(echo 'one_two_three_four_five' | cut -d'_' -f4)"
+
+---
+
+via https://unix.stackexchange.com/a/312400/126066
+
+Using awk:
+
+    A=$(awk -F_ '{print $2}' <<< 'one_two_three_four_five')
+    B=$(awk -F_ '{print $4}' <<< 'one_two_three_four_five')
+
+e.g. Get all pids of firefox processes:
+
+    ps aux | grep firefox | awk '{print $2}'

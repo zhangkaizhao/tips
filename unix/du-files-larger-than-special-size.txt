@@ -1,0 +1,28 @@
+du files larger than special size
+
+e.g.
+
+$ du -s *
+8572	fib
+2560	hackerviews
+2680	hedron
+2080	karax
+564	mdproof
+1960	parallel_worker
+1924	tetris
+1872	tower-web
+7480	walkdir-test
+164	wasm-pack-hello
+692	zen
+
+$ du -s * | awk '{ if ($1 > 200) print $0}' | sort -n -r
+8572	fib
+7480	walkdir-test
+2680	hedron
+2560	hackerviews
+2080	karax
+1960	parallel_worker
+1924	tetris
+1872	tower-web
+692	zen
+564	mdproof

@@ -1,0 +1,92 @@
+Upgrade Android Studio Manually
+
+2019-06-25
+
+via https://yifeng.studio/2017/03/07/android-studio-update-things/
+
+https://dl.google.com/android/studio/patches/updates.xml
+
+网页中包含各渠道最新版本所支持的 patch 包详细情况。这里截取其中的一段用来展示说明：
+
+```
+<channel feedback="https://code.google.com/p/android/issues/entry?template=Android+Studio+bug" id="AI-2-eap" majorVersion="2" name="Android Studio updates"status="eap" url="http://tools.android.com/recent">
+<build apiVersion="AI-143.1821.5" number="AI-143.2821654" version="2.1.1">
+<message>
+<![CDATA[
+<html>A new Android Studio 2.1.1 is available in the canary channel.<p/> <b>Please update to Android Studio v2.1.1</b>. This fixes a serious security vulnerability in all older versions of Android Studio.<br/></html>
+]]>
+</message>
+<button download="true" name="Download" url="http://tools.android.com/download/studio/canary/latest/"/>
+<button name="Release Notes" url="http://tools.android.com/recent"/>
+<patch from="141.2456560" size="82"/>
+<!-- 1.5.1.0 -->
+<patch from="143.2664576" size="42"/>
+<!-- 2.1.0.0 -->
+<patch from="143.2682553" size="42"/>
+<!-- 2.1.0.1 -->
+<patch from="143.2712822" size="42"/>
+<!-- 2.1.0.2 -->
+<patch from="143.2730271" size="42"/>
+<!-- 2.1.0.3 -->
+<patch from="143.2739321" size="18"/>
+<!-- 2.0.0.20 -->
+<patch from="143.2759333" size="42"/>
+<!-- 2.1.0.5 -->
+<patch from="143.2765781" size="42"/>
+<!-- 2.1.0.6 -->
+<patch from="143.2771856" size="42"/>
+<!-- 2.1.0.7 -->
+<patch from="143.2783836" size="14"/>
+<!-- 2.1.0.8 -->
+<patch from="143.2790544" size="3"/>
+<!-- 2.1.0.9 -->
+</build>
+</channel>
+```
+
+可以看出，在这些信息中包含有 Android Studio 的当前最新版本及其所支持使用 patch 包增量更新的所有版本信息和对应补丁大小。比如本例中的最新版本为 2.1.1，版本号为 AI-143.2821654，支持增量更新的最低版本为1.5.1.0，版本号为 141.2456560。而目前使用的是 1.5.0 版本，所以为了使用增量更新的方式更新到最新版本，至少先将本地 Android Studio 升级到 1.5.1.0 版本。
+
+补丁包的下载链接格式如下，其中 $FROM 表示当前版本的版本号，$TO 表示要更新版本的版本号：
+
+```
+https://dl.google.com/android/studio/patches/AI-$FROM-$TO-patch-mac.jar
+```
+
+通过选择 Android Studio ==> About Android Studio 可以查看当前 Android Studio 的版本号。所以，从 1.5.0 版本升级到1.5.1.0 版本的 patch 包下载链接为：
+
+```
+https://dl.google.com/android/studio/patches/AI-141.2422023-141.2456560-patch-mac.jar
+```
+
+下载完成之后，使用系统或者 Android Studio 提供的命令行工具进入到 Android Studio安装包目录下（ Contents 同级目录），输入如下命令并执行，经过短暂的等待便可完成手动更新的过程（注意 patch 包的路径，根据实际情况另行修改）：
+
+```
+java -classpath /Users/yifeng/Desktop/AI-141.2422023-141.2456560-patch-mac.jar com.intellij.updater.Runner install Contents/
+```
+
+注意：如果上述命令执行的目录位置错误，比如进入到了 Contents 目录里面，会出现如下错误：
+
+[image]
+
+更新完成之后，重启 Android Studio，再查看当前版本信息：
+
+[image]
+
+如图所示，当前版本已经为1.5.1，符合使用 Android Studio 自动更新功能升级至 最新版本2.1.1的最低版本要求。
+
+----
+
+3.2.1 -> 3.4.1
+
+https://dl.google.com/android/studio/patches/AI-181.5540.7.32.5056338-183.6156.11.34.5522156-patch-mac.jar
+
+
+```
+cd /Users/kaizhao/software/IDE/
+https_proxy=127.0.0.1:8118 wget -c https://dl.google.com/android/studio/patches/AI-181.5540.7.32.5056338-183.6156.11.34.5522156-patch-mac.jar
+```
+
+```
+cd /Applications/Android\ Studio.app/
+Contents/jre/jdk/Contents/Home/bin/java -classpath /Users/kaizhao/software/IDE/AI-181.5540.7.32.5056338-183.6156.11.34.5522156-patch-mac.jar com.intellij.updater.Runner install Contents/
+```

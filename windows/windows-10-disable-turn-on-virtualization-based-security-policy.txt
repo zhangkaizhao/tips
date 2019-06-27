@@ -1,0 +1,13 @@
+Windows 10 disable "Turn on Virtualization Based Security" policy
+
+2019-06-27
+
+VirtualBox is failed to start virtual machines with error "VT-x is not available".
+
+Run "gpedit.msc" and follow the steps:
+
+Local Computer Policy > Computer Configuration > Administrative Templates > System > Device Guard > Turn on Virtualization Based Security to Disabled
+
+Then restart the computer. Now VirtualBox works again.
+
+via https://forums.virtualbox.org/viewtopic.php?f=6&t=87997#p421072

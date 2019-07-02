@@ -1,0 +1,38 @@
+Installing NetBSD 8.1 amd64 on VirtualBox with UEFI
+
+2019-07-02
+
+Download install media https://cdn.netbsd.org/pub/NetBSD/NetBSD-8.1/images/NetBSD-8.1-amd64.iso
+
+via https://wiki.netbsd.org/Installation_on_UEFI_systems/
+
+# sysctl hw.disknames
+
+# dkctl wd0 listwedges
+
+# gpt show wd0
+
+# gpt destroy wd0
+# gpt create wd0
+
+# gpt add -a 2m -l ESP -t efi -s 128m wd0
+# gpt add -a 2m -l NetBSD -t ffs -s 6g wd0
+# gpt add -a 2m -l "netbsd-swap" -t swap -s 1g wd0
+
+# gpt show wd0
+
+# dkctl wd0 listwedges
+
+# newfs_msdos /dev/rdk0
+# mount -t msdos /dev/dk0 /mnt
+# mkdir -p /mnt/EFI/boot
+# cp /usr/mdec/*.efi /mnt/EFI/boot/
+# umount /mnt
+
+# newfs -O 2 dk1
+
+# exit
+
+"On which disk do you want to install NetBSD?" -> select the preformatted wedge with label "NetBSD".
+
+"A swap partition (named netbsd-swap) seems to exist on wd0. Do you want to use that?" -> select "Yes"

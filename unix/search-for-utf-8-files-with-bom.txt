@@ -1,0 +1,19 @@
+Search for UTF-8 files with BOM
+
+via https://stackoverflow.com/a/2858757/3449199
+
+Just find out UTF-8 files with BOM:
+
+  grep -rl $'\xEF\xBB\xBF' .
+
+Find out UTF-8 files with BOM and then remove BOM:
+
+  find . -type f -exec sed '1s/^\xEF\xBB\xBF//' -i {} \;
+
+----
+
+answered May 18 '10 at 15:37
+Denis
+
+edited Jan 5 '18 at 17:04
+Tiberiu-Ionuț Stan

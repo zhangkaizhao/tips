@@ -1,0 +1,26 @@
+the three fundamental advantages of async/await over threads
+
+via https://discuss.python.org/t/what-are-the-advantages-of-asyncio-over-threads/2112/6
+
+by Nathaniel J. Smith https://discuss.python.org/u/njs
+
+There are exactly three syntactic forms that can do an ``await``, and those are
+``await``, ``async for``, and ``async with``.
+
+Anyway, in Python, the three fundamental advantages of async/await over threads
+are:
+
+* Cooperative multi-tasking is much lighter-weight than OS threads, so you can
+  reasonably have millions of concurrent tasks, versus maybe a dozen or two
+  threads at best.
+* Using await makes visible where the schedule points are. This has two
+  advantages:
+
+  * It makes it easier to reason about data races
+  * A downside of cooperative multi-tasking is that if a task doesn’t yield
+    then it can accidentally block all other tasks from running; if schedule
+    points were invisible it would be more difficult to debug this issue.
+
+* Tasks can support cancellation. (Which also benefits from making await
+  visible, because it makes it possible to reason about which points are
+  cancellation points.)

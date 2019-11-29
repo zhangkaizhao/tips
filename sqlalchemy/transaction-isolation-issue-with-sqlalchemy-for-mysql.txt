@@ -1,0 +1,45 @@
+# Transaction isolation issue with SQLAlchemy for MySQL
+
+References:
+
+* https://stackoverflow.com/questions/10210080/how-to-disable-sqlalchemy-caching
+* https://stackoverflow.com/questions/16586114/sqlalchemy-returns-stale-rows
+
+zzzeek's answer ( https://stackoverflow.com/a/10212030 ):
+
+The usual cause for people thinking there's a "cache" at play, besides the usual
+SQLAlchemy identity map which is local to a transaction, is that they are
+observing the effects of transaction isolation. SQLAlchemy's session works by
+default in a transactional mode, meaning it waits until `session.commit()` is
+called in order to persist data to the database. During this time, other
+transactions in progress elsewhere will not see this data.
+
+However, due to the isolated nature of transactions, there's an extra twist.
+Those other transactions in progress will not only not see your transaction's
+data until it is committed, they also can't see it in some cases until they are
+committed or rolled back also (which is the same effect your close() is having
+here). A transaction with an average degree of **isolation** will hold onto the
+state that it has loaded thus far, and keep giving you that same state local to
+the transaction even though the real data has changed - this is called
+**repeatable reads** in transaction isolation parlance.
+
+http://en.wikipedia.org/wiki/Isolation_%28database_systems%29
+
+----
+
+Other's ( https://stackoverflow.com/a/16588943 ):
+
+Edit: Adding commit() before reading did the trick, as per eggyal's explanation.
+
+```
+self._session.commit()
+self._session.query(Automatic).\
+             filter(Automatic.do_when <= time()).\
+             limit(limit).\
+             all()
+```
+
+----
+
+One exmaple for `aiomysql.sa` is putting a `await conn.execute('commit')` statement before each database select query.
+(Tested with `aiomysql.sa` and `aiohttp`.)

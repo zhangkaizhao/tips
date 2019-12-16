@@ -1,0 +1,27 @@
+# How to disable color output of ls
+
+----
+
+Color output for ls is typically enabled through an alias in most distros nowadays.
+
+```
+$ alias ls
+alias ls='ls --color=auto'
+```
+
+You can always disable an alias temporarily by prefixing it with a backslash.
+
+```
+$ \ls
+```
+
+Doing the above will short circuit the alias just for this one invocation.
+You can use it any time you want to disable any alias.
+
+edited Jan 1 '14 at 16:51
+iconoclast
+
+answered Jan 1 '14 at 3:08
+slm♦
+
+https://unix.stackexchange.com/a/107372/126066

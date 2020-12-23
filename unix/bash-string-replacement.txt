@@ -1,0 +1,37 @@
+# String replacement in Bash
+
+----
+
+https://stackoverflow.com/a/5928254/3449199
+
+Use inline shell string replacement. Example:
+
+    foo="  "
+
+    # replace first blank only
+    bar=${foo/ /.}
+
+    # replace all blanks
+    bar=${foo// /.}
+
+See http://tldp.org/LDP/abs/html/string-manipulation.html for more details.
+
+answered May 8 '11 at 15:11
+Brian Clapper
+
+----
+
+https://stackoverflow.com/a/5928230/3449199
+
+In bash, you can do [pattern replacement] in a string with the `${VARIABLE//PATTERN/REPLACEMENT}` construct.
+Use just `/` and not `//` to replace only the first occurrence.
+The pattern is a wildcard pattern, like file globs.
+
+    string='foo bar qux'
+    one="${string/ /.}"     # sets one to 'foo.bar qux'
+    all="${string// /.}"    # sets all to 'foo.bar.qux'
+
+[pattern replacement]: http://www.gnu.org/software/bash/manual/bashref.html#Shell-Parameter-Expansion
+
+answered May 8 '11 at 15:08
+Gilles 'SO- stop being evil'

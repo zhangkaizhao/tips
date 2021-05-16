@@ -1,0 +1,62 @@
+# Exclude files from git diff
+
+Tested with Git 2.31.1:
+
+```
+git diff 2965f9a..c3bc304 -- . ':(exclude)Cargo.lock'
+```
+
+or:
+
+```
+git diff 2965f9a..c3bc304 -- . ':!Cargo.lock'
+```
+
+------
+
+https://stackoverflow.com/a/39943727/3449199
+
+Omg, drivers and awk to exclude a lousy file ? Since git [1.9 something][1] you can:
+
+```
+git diff -- . ':(exclude)db/irrelevant.php' ':(exclude)db/irrelevant2.php'
+```
+
+Ah, elegance! See the quoted answer and for details [this answer][2] by @torek
+
+[1]: https://stackoverflow.com/a/21079437/281545
+[2]: https://stackoverflow.com/a/39937070/281545
+
+--
+
+edited Dec 11 '18 at 14:25 [sashoalm]
+
+answered Oct 9 '16 at 12:40 [Mr_and_Mrs_D]
+
+[sashoalm]: https://stackoverflow.com/users/492336/sashoalm
+[Mr_and_Mrs_D]: https://stackoverflow.com/users/281545/mr-and-mrs-d
+
+------
+
+https://stackoverflow.com/a/48259275/3449199
+
+This method is shorter than the accepted answers.
+
+```
+git diff 987200fbfb 878cee40ba --stat -- ':!*.cs'
+```
+
+For more information about the different inclusion/exclusion possibilities read [this other post][3]
+
+[3]: https://stackoverflow.com/questions/5685007/making-git-log-ignore-changes-for-certain-paths/21079437#21079437
+
+--
+
+edited Dec 22 '18 at 6:30 [P i]
+
+answered Jan 15 '18 at 8:30 [Chiel ten Brinke]
+
+[P i]: https://stackoverflow.com/users/435129/p-i
+[Chiel ten Brinke]: https://stackoverflow.com/users/1546844/chiel-ten-brinke
+
+------

@@ -1,0 +1,14 @@
+# Simple Local HTTP Server With Ruby
+
+via http://sweetme.at/2013/08/28/simple-local-http-server-with-ruby/
+
+Compare to Python's batteries included Simple HTTP Server
+(Python 2: `python -m SimpleHTTPServer`, Python 3: `python -m http.server`)
+
+One Line Ruby HTTP Server with webrick:
+
+```
+ruby -run -e httpd . -p 8000
+```
+
+Make sure webrick library is included (old Ruby version) or installed as a ruby gem (new Ruby version).

@@ -1,0 +1,23 @@
+# Pandoc with Chinese
+
+2021-08-27
+
+https://github.com/jgm/pandoc/wiki/Pandoc-with-Chinese
+
+Insert some lines like these at the top of the markdown file,
+
+```
+---
+documentclass:
+    - ctexart
+mainfont: LXGW WenKai
+CJKmainfont: LXGW WenKai
+CJKoptions: AutoFakeBold
+---
+```
+
+Then,
+
+```sh
+pandoc --pdf-engine=xelatex -o zh-x.pdf zh.txt
+```

@@ -21,3 +21,23 @@ Then,
 ```sh
 pandoc --pdf-engine=xelatex -o zh-x.pdf zh.txt
 ```
+
+----
+
+For more options or other methods see stackoverflow:
+
+https://tex.stackexchange.com/questions/341809/pandoc-does-not-recognize-chinese-characters
+
+e.g.
+
+```
+---
+CJKmainfont: STSong
+CJKoptions: BoldFont=STHeiti,ItalicFont=STKaiti
+
+CJKsansfont: STXihei
+CJKsansoptions: BoldFont=STHeiti
+
+CJKmonofont: STFangsong
+---
+```

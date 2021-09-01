@@ -1,0 +1,36 @@
+OpenRC/supervise-daemon
+
+https://wiki.gentoo.org/wiki/OpenRC/supervise-daemon
+
+Supervise-daemon is OpenRC's daemon supervisor. It can start, stop and restart system processes when they terminate unexpectedly.
+
+## Introduction
+
+OpenRC traditionally uses **start-stop-daemon**, often abbreviated to **s-s-d** for starting and stopping programs. When s-s-d starts a process it saves the process' PID somewhere on permanent storage (typically under /run/), and backgrounds (daemonizes) the process it started. When the time comes to stop, kill, or signal the daemon process s-s-d will use the saved PID file to find the right process.
+
+Supervising on the other hand usually keeps the started daemon as a child process of the supervisor. Backgrounding the daemon is therefore not needed, and not desired. Pidfiles are not needed because the supervisor process remembers the pid.
+
+Supervising daemon process has a few major advantages:
+
+1. If and when a daemon process dies (crashes) then its supervisor will notice it and try to restart it.
+2. Any terminal output sent by the daemon process to stdout and stderr can be caught by the supervisor, and then sent to the system logger or to a file.
+
+This article aims to provide help how to bring services under its supervision.
+
+## General recipe
+
+Currently, standard Gentoo init files do not use process supervision with supervise-daemon yet: it is left to users to make these modifications to the init files.
+
+The general recipe to bring a service under the control of supervise-daemon is to adapt its init file in /etc/init.d as follows:
+
+* always add `supervisor="supervise-daemon"`
+* remove any pidfile reference that the command would create. supervise-daemon needs a pidfile for itself. e.g. :
+
+  * change `command_args="-p ${pidfile} ${NTPD_OPTS}"` into `command_args="${NTPD_OPTS}" command_args_background="-p ${pidfile}"`
+
+* make sure the daemon will run in foreground by applying one of the following methods:
+
+  * if the daemon forks itself to the background (daemonizes itself) then pass the appropriate daemon command line option, e.g. `command_args_foreground="--foreground"`. Note that the command line option to prevent daemonizing is different per service, and some services might not even provide this option.
+  * if there is a command line parameter for the daemon process to make it daemonize itself, then move it to `command_args_background`
+
+* replace calls to `start-stop-daemonand` if needed with calls to `${supervisor}` as appropriate.

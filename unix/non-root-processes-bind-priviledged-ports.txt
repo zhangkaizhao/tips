@@ -1,0 +1,70 @@
+Non root processes bind priviledged ports
+
+----
+
+https://serverfault.com/a/394136
+
+If your system supports it you could maybe use capabilities. See man capabilities, the one you need would be CAP_NET_BIND_SERVICE.
+
+On newer Debian/Ubuntu you can run:
+
+sudo apt-get install libcap2-bin
+sudo setcap 'cap_net_bind_service=+ep' /path/to/program
+
+answered May 30 '12 at 20:32
+Otto Kekäläinen
+
+----
+
+https://stackoverflow.com/a/414258/3449199
+
+Okay, thanks to the people who pointed out the capabilities system and CAP_NET_BIND_SERVICE capability. If you have a recent kernel, it is indeed possible to use this to start a service as non-root but bind low ports. The short answer is that you do:
+
+setcap 'cap_net_bind_service=+ep' /path/to/program
+And then anytime program is executed thereafter it will have the CAP_NET_BIND_SERVICE capability. setcap is in the debian package libcap2-bin.
+
+Now for the caveats:
+
+You will need at least a 2.6.24 kernel
+This won't work if your file is a script. (ie, uses a #! line to launch an interpreter). In this case, as far I as understand, you'd have to apply the capability to the interpreter executable itself, which of course is a security nightmare, since any program using that interpreter will have the capability. I wasn't able to find any clean, easy way to work around this problem.
+Linux will disable LD_LIBRARY_PATH on any program that has elevated privileges like setcap or suid. So if your program uses its own .../lib/, you might have to look into another option like port forwarding.
+Resources:
+
+capabilities(7) man page. Read this long and hard if you're going to use capabilities in a production environment. There are some really tricky details of how capabilities are inherited across exec() calls that are detailed here.
+setcap man page
+"Bind ports below 1024 without root on GNU/Linux": The document that first pointed me towards setcap.
+Note: RHEL first added this in v6.
+
+
+edited Jul 20 '14 at 0:06
+Cristian Ciupitu
+
+answered Jan 5 '09 at 19:46
+Jason Creighton
+
+----
+
+https://www.geeksforgeeks.org/bind-port-number-less-1024-non-root-access/
+
+How to allow non root access to bind below port number 1024?
+
+But there are two method by which we can assign port number less than 1024 without having root privilege :
+
+1. Method 1 : Using CAP_NET_BIND_SERVICE to grant low-numbered port access to a process :
+For this, we just need to run following command in terminal :
+
+  sudo setcap CAP_NET_BIND_SERVICE=+eip /path/to/binary
+
+2. Method 2 : Using authbind to grant one-time access, with finer user/group/port control. Let we have to assign port number 80. For this, following steps required :
+
+* Install authbind using any package manager
+* Run following two commands one by one in terminal :
+
+  sudo touch /etc/authbind/byport/80
+  sudo chmod 777 /etc/authbind/byport/80
+
+Here, 80 is given in end of command as we are attempting to assign port number 80.
+
+* Now execute following command in terminal
+
+  authbind --deep /path/to/binary command line args

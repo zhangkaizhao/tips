@@ -1,0 +1,37 @@
+# Party trick to avoid the lambdas
+
+via https://twitter.com/brettsky/status/1456343895923585024
+
+```python
+items = {
+    'laptop': 600 .__mul__,
+    'raspberry pi': 5 .__mul__,
+    'arduino': 50 .__mul__,
+}
+```
+
+Testing:
+
+>>> 600.__mul__
+  File "<stdin>", line 1
+    600.__mul__
+        ^
+SyntaxError: invalid syntax
+>>> 600 .__mul__
+<method-wrapper '__mul__' of int object at 0x7f17ae90bcd0>
+>>> (600 .__mul__)(100)
+60000
+
+----
+https://twitter.com/brettsky/status/1456348590951964673
+
+The funny thing is the space is the only magic here; Python is a truly object-oriented programming language, so integers have methods too. Add that `*` is just calling `__mul__()` means you can do that to any object.
+
+Now knowing you need that space to make the parser happy?
+----
+https://twitter.com/AdamChainz/status/1456348245811159041
+
+partial() trick to avoid the lambdas:
+
+'laptop': partial(operator.mul, 600)
+----

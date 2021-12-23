@@ -4,72 +4,72 @@ via https://www.librebyte.net/en/cli-en/pkgin-a-netbsd-package-manager/ (2021-12
 
 Initialize/Update repo definition
 
-  pkgin update
+    pkgin update
 
 List availables packages
 
-  pkgin avail
+    pkgin avail
 
 List installed packages
 
-  pkgin list
+    pkgin list
 
 Search
 
-  pkgin search nginx
+    pkgin search nginx
 
 Search using regular expression
 
-  pkgin search '^apache\-[[:digit:]]'
+    pkgin search '^apache\-[[:digit:]]'
 
 Install/update a package and its dependencies
 
-  pkgin install nginx
+    pkgin install nginx
 
 Uninstall a package
 
-  pkgin remove curl
+    pkgin remove curl
 
 Remove orphan dependencies
 
-  pkgin autoremove
+    pkgin autoremove
 
 Show information about a package
 
-  pkgin pkg-descr nginx
+    pkgin pkg-descr nginx
 
 Update all packages
 
-  pkgin upgrade
+    pkgin upgrade
 
 Clean the cache
 
-  pkgin clean
+    pkgin clean
 
 Find direct dependencies of a package
 
-  pkgin show-deps curl
+    pkgin show-deps curl
 
 Find reverse dependencies of a package
 
-  pkgin show-rev-deps curl
+    pkgin show-rev-deps curl
 
 Find all dependencies of a package
 
-  pkgin show-full-deps curl
+    pkgin show-full-deps curl
 
 find all module/libraries which a package depends on
 
-  pkgin requires curl
+    pkgin requires curl
 
 Find all libraries that a package shares with other packages
 
-  pkgin provides curl
+    pkgin provides curl
 
 Show all files contained in a package
 
-  pkgin pkg-content nginx
+    pkgin pkg-content nginx
 
 Show the category to which a package belongs
 
-  pkgin spc nginx
+    pkgin spc nginx

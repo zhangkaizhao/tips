@@ -1,0 +1,35 @@
+# JDK in macOS
+
+via https://www.codevoila.com/post/78/how-to-uninstall-or-remove-jdk-in-mac-os-x
+
+List installed JDK versions and current version in use:
+
+  $ /usr/libexec/java_home -V
+  Matching Java Virtual Machines (2):
+    11.0.13 (x86_64) "Eclipse Temurin" - "Eclipse Temurin 11" /Library/Java/JavaVirtualMachines/jdk-11.0.13+8/Contents/Home
+    1.8.0_312 (x86_64) "Eclipse Temurin" - "Eclipse Temurin 8" /Library/Java/JavaVirtualMachines/jdk8u312-b07/Contents/Home
+  /Library/Java/JavaVirtualMachines/jdk-11.0.13+8/Contents/Home
+
+Switch JDK version by setting JAVA_HOME environment variable:
+
+  $ export JAVA_HOME=`/usr/libexec/java_home -v 1.8`
+
+Install a JDK version:
+
+  # Archived OpenJDK General-Availability Releases: https://jdk.java.net/archive/
+  # (via https://jdk.java.net/)
+  # JDK 8 Update Releases: https://wiki.openjdk.java.net/display/jdk8u/Main
+  # JDK 11 Update Releases: https://wiki.openjdk.java.net/display/JDKUpdates/JDK11u
+  # (via https://openjdk.java.net/projects/jdk8u and https://openjdk.java.net/projects/jdk-updates/)
+
+  # download, extract and put it in global or user local
+  # install to global: /Library/Java/JavaVirtualMachines
+  # install to user local: ~/Library/Java/JavaVirtualMachines
+
+Uninstall a JDK version:
+
+  # uninstall a global installed JDK version
+  $ sudo rm -rf /Library/Java/JavaVirtualMachines/jdk8u312-b07
+
+  # uninstall a user local installed JDK version
+  $ rm -rf ~/Library/Java/JavaVirtualMachines/jdk8u312-b07

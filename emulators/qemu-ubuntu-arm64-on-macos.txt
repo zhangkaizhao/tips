@@ -1,0 +1,24 @@
+# QEMU Ubuntu ARM64 on macOS
+
+First, install QEMU from Homebrew or MacPorts or pkgsrc or others. Here I use pkgsrc.
+
+    pkgsrc install qemu
+
+Second, download Ubuntu ARM64 cloud image. Here I download the Ubuntu Focal server cloud image from USTC mirror.
+
+    https://mirrors.tuna.tsinghua.edu.cn/ubuntu-cloud-images/focal/20211216/focal-server-cloudimg-arm64.img
+
+Then, create pflash volumes for UEFI.
+
+    dd if=/dev/zero of=flash0.img bs=1m count=64
+    dd if=/opt/pkg/share/qemu/edk2-aarch64-code.fd of=flash0.img conv=notrunc
+    dd if=/dev/zero of=flash1.img bs=1m count=64
+
+At last, boot into the cloud image.
+
+    qemu-system-aarch64 -m 1024 -cpu cortex-a57 -M virt -nographic -pflash flash0.img -pflash flash1.img -drive if=none,file=focal-server-cloudimg-arm64.img,id=hd0 -device virtio-blk-device,drive=hd0 -netdev type=user,id=net0 -device virtio-net-device,netdev=net0
+
+
+References:
+
+* https://wiki.ubuntu.com/ARM64/QEMU (2022-01-02)

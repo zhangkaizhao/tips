@@ -1,0 +1,171 @@
+# zig cc as CC for Crystal compiler on macOS
+
+The guide is [zig cc a powerful drop-in replacement for GCC/Clang].
+
+## Environment
+
+macOS:
+
+    $ uname -rms
+    Darwin 21.2.0 x86_64
+
+Clang:
+
+    $ cc --version
+    Apple clang version 13.0.0 (clang-1300.0.29.30)
+    Target: x86_64-apple-darwin21.2.0
+    Thread model: posix
+    InstalledDir: /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin
+
+Crystal downloaded from official package [crystal-1.3.0-1-darwin-universal.tar.gz]:
+
+    $ crystal --version
+    Crystal 1.3.1 [a6fcb1029] (2022-01-13)
+
+    LLVM: 10.0.0
+    Default target: x86_64-apple-macosx
+
+Zig downloaded from official package [zig-macos-x86_64-0.9.0.tar.xz]:
+
+    $ zig version
+    0.9.0
+
+    $ zig cc --version
+    clang version 13.0.1 (git@github.com:ziglang/zig-bootstrap.git 74211dd7f7e7174a2027641dfcfdb3fc5df62f0c)
+    Target: x86_64-unknown-darwin21.2.0
+    Thread model: posix
+    InstalledDir: /usr/bin
+
+openssl (libssl and libcrypto) provided by [pkgsrc on macOS]:
+
+    $ pkg-config --libs libssl
+    -L/opt/pkg/lib -lssl
+    $ pkg-config --libs libcrypto
+    -L/opt/pkg/lib -lcrypto
+    $ pkg_info -Fe /opt/pkg/lib/libssl.1.1.dylib
+    openssl-1.1.1l
+    $ pkg_info -Fe /opt/pkg/lib/libcrypto.1.1.dylib
+    openssl-1.1.1l
+
+## Test source code
+
+Source code from [Crystal offical website]:
+
+File `concur.cr` for Concurrency Model:
+
+    channel = Channel(Int32).new
+    total_lines = 0
+    files = Dir.glob("*.txt")
+
+    files.each do |f|
+      spawn do
+        lines = File.read_lines(f)
+        channel.send lines.size
+      end
+    end
+
+    files.size.times do
+      total_lines += channel.receive
+    end
+
+    puts total_lines
+
+File `server.cr` for SYNTAX:
+
+    # A very basic HTTP server
+    require "http/server"
+
+    server = HTTP::Server.new do |context|
+      context.response.content_type = "text/plain"
+      context.response.print "Hello world, got #{context.request.path}!"
+    end
+
+    puts "Listening on http://127.0.0.1:8080"
+    server.listen(8080)
+
+## Tests
+
+Link some *.txt files for tests:
+
+    $ ln -s concur.cr concur.cr.txt
+    $ ln -s server.cr server.cr.txt
+
+### Use Crystal compiler with Clang directly
+
+Compile file `concur.cr`:
+
+    $ crystal build concur.cr
+    $ otool -L concur
+    concur:
+    	/usr/lib/libSystem.B.dylib (compatibility version 1.0.0, current version 1311.0.0)
+    	/usr/lib/libiconv.2.dylib (compatibility version 7.0.0, current version 7.0.0)
+    $ ./concur
+    27
+
+Compile file `server.cr`:
+
+    $ crystal build server.cr
+    Undefined symbols for architecture x86_64:
+      "_iconv", referenced from:
+          _*Crystal::Iconv#convert<Pointer(Pointer(UInt8)), Pointer(UInt64), Pointer(Pointer(UInt8)), Pointer(UInt64)>:UInt64 in C-rystal5858I-conv.o
+      "_iconv_close", referenced from:
+          _*Crystal::Iconv#close:Nil in C-rystal5858I-conv.o
+      "_iconv_open", referenced from:
+          _*Crystal::Iconv#initialize<String, String, (Symbol | Nil)>:Nil in C-rystal5858I-conv.o
+    ld: symbol(s) not found for architecture x86_64
+    clang: error: linker command failed with exit code 1 (use -v to see invocation)
+    Error: execution of command failed with code: 1: `cc "${@}" -o /Users/kaizhao/lab/crystal/server  -rdynamic -L/usr/local/programs/crystal/embedded/lib -lz `command -v pkg-config > /dev/null && pkg-config --libs --silence-errors libssl || printf %s '-lssl -lcrypto'` `command -v pkg-config > /dev/null && pkg-config --libs --silence-errors libcrypto || printf %s '-lcrypto'` -lpcre -lgc -lpthread -levent -liconv -ldl`
+
+
+### Use Crystal compiler with zig cc
+
+Compile file `concur.cr`:
+
+    $ CC="zig cc" crystal build concur.cr
+    $ otool -L concur
+    concur:
+    	/usr/lib/libpcre.0.dylib (compatibility version 1.0.0, current version 1.10.0)
+    	/usr/lib/libiconv.2.dylib (compatibility version 7.0.0, current version 7.0.0)
+    	/usr/lib/libSystem.B.dylib (compatibility version 1.0.0, current version 1311.0.0)
+    $ ./concur
+    27
+
+Compile file `server.cr`:
+
+    $ CC="zig cc" crystal build server.cr
+    $ otool -L server
+    server:
+    	/usr/lib/libz.1.dylib (compatibility version 1.0.0, current version 1.2.11)
+    	/opt/pkg/lib/libssl.1.1.dylib (compatibility version 1.1.0, current version 1.1.0)
+    	/opt/pkg/lib/libcrypto.1.1.dylib (compatibility version 1.1.0, current version 1.1.0)
+    	/usr/lib/libpcre.0.dylib (compatibility version 1.0.0, current version 1.10.0)
+    	/usr/lib/libiconv.2.dylib (compatibility version 7.0.0, current version 7.0.0)
+    	/usr/lib/libSystem.B.dylib (compatibility version 1.0.0, current version 1311.0.0)
+    $ ./server
+    Listening on http://127.0.0.1:8080
+
+Use curl as HTTP client for tests:
+
+    $ curl -v http://127.0.0.1:8080/
+    *   Trying 127.0.0.1:8080...
+    * Connected to 127.0.0.1 (127.0.0.1) port 8080 (#0)
+    > GET / HTTP/1.1
+    > Host: 127.0.0.1:8080
+    > User-Agent: curl/7.77.0
+    > Accept: */*
+    > 
+    * Mark bundle as not supporting multiuse
+    < HTTP/1.1 200 OK
+    < Connection: keep-alive
+    < Content-Type: text/plain
+    < Content-Length: 19
+    < 
+    * Connection #0 to host 127.0.0.1 left intact
+    Hello world, got /!
+
+
+[zig cc a powerful drop-in replacement for GCC/Clang]: https://andrewkelley.me/post/zig-cc-powerful-drop-in-replacement-gcc-clang.html
+[crystal-1.3.0-1-darwin-universal.tar.gz]: https://github.com/crystal-lang/crystal/releases/download/1.3.0/crystal-1.3.0-1-darwin-universal.tar.gz
+[zig-macos-x86_64-0.9.0.tar.xz]: https://ziglang.org/download/0.9.0/zig-macos-x86_64-0.9.0.tar.xz
+[pkgsrc on macOS]: https://pkgsrc.joyent.com/install-on-osx/
+[Crystal offical website]: https://crystal-lang.org/

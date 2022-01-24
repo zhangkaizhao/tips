@@ -1,4 +1,4 @@
-Non root processes bind priviledged ports
+Non root processes bind privileged ports
 
 ----
 

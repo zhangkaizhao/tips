@@ -1,0 +1,69 @@
+# read only library dependencies of depth 1 in Linux
+
+----
+https://stackoverflow.com/a/1490497/3449199
+
+Is your problem that `ldd` doesn't output a nice-looking dependency tree? Use `ldd -v`.
+
+    $ LD_TRACE_LOADED_OBJECTS=1 LD_VERBOSE=1 /lib/ld.so.1 /sbin/badblocks
+            linux-vdso32.so.1 =>  (0x00100000)
+            libext2fs.so.2 => /lib/libext2fs.so.2 (0x0ffa8000)
+            libcom_err.so.2 => /lib/libcom_err.so.2 (0x0ff84000)
+            libc.so.6 => /lib/libc.so.6 (0x0fdfa000)
+            libpthread.so.0 => /lib/libpthread.so.0 (0x0fdc0000)
+            /lib/ld.so.1 (0x201f9000)
+
+            Version information:
+            /sbin/badblocks:
+                    libc.so.6 (GLIBC_2.2) => /lib/libc.so.6
+                    libc.so.6 (GLIBC_2.4) => /lib/libc.so.6
+                    libc.so.6 (GLIBC_2.1) => /lib/libc.so.6
+                    libc.so.6 (GLIBC_2.0) => /lib/libc.so.6
+                    libc.so.6 (GLIBC_2.3.4) => /lib/libc.so.6
+            /lib/libext2fs.so.2:
+                    libc.so.6 (GLIBC_2.1.3) => /lib/libc.so.6
+                    libc.so.6 (GLIBC_2.4) => /lib/libc.so.6
+                    libc.so.6 (GLIBC_2.3) => /lib/libc.so.6
+                    libc.so.6 (GLIBC_2.2) => /lib/libc.so.6
+                    libc.so.6 (GLIBC_2.1) => /lib/libc.so.6
+                    libc.so.6 (GLIBC_2.0) => /lib/libc.so.6
+            /lib/libcom_err.so.2:
+                    ld.so.1 (GLIBC_2.3) => /lib/ld.so.1
+                    libpthread.so.0 (GLIBC_2.1) => /lib/libpthread.so.0
+                    libpthread.so.0 (GLIBC_2.0) => /lib/libpthread.so.0
+                    libc.so.6 (GLIBC_2.1.3) => /lib/libc.so.6
+                    libc.so.6 (GLIBC_2.4) => /lib/libc.so.6
+                    libc.so.6 (GLIBC_2.1) => /lib/libc.so.6
+                    libc.so.6 (GLIBC_2.0) => /lib/libc.so.6
+            /lib/libc.so.6:
+                    ld.so.1 (GLIBC_PRIVATE) => /lib/ld.so.1
+                    ld.so.1 (GLIBC_2.3) => /lib/ld.so.1
+            /lib/libpthread.so.0:
+                    ld.so.1 (GLIBC_2.3) => /lib/ld.so.1
+                    ld.so.1 (GLIBC_2.1) => /lib/ld.so.1
+                    ld.so.1 (GLIBC_PRIVATE) => /lib/ld.so.1
+                    libc.so.6 (GLIBC_2.1.3) => /lib/libc.so.6
+                    libc.so.6 (GLIBC_2.3.4) => /lib/libc.so.6
+                    libc.so.6 (GLIBC_2.4) => /lib/libc.so.6
+                    libc.so.6 (GLIBC_2.1) => /lib/libc.so.6
+                    libc.so.6 (GLIBC_2.3.2) => /lib/libc.so.6
+                    libc.so.6 (GLIBC_2.2) => /lib/libc.so.6
+                    libc.so.6 (GLIBC_PRIVATE) => /lib/libc.so.6
+                    libc.so.6 (GLIBC_2.0) => /lib/libc.so.6
+
+...
+
+If you want, you can read the ELF headers directly instead of depending on the dynamic linker.
+
+    $ readelf -d /sbin/badblocks | grep NEEDED
+     0x00000001 (NEEDED)                     Shared library: [libext2fs.so.2]
+     0x00000001 (NEEDED)                     Shared library: [libcom_err.so.2]
+     0x00000001 (NEEDED)                     Shared library: [libc.so.6]
+    $ readelf -d /lib/libcom_err.so.2 | grep NEEDED
+     0x00000001 (NEEDED)                     Shared library: [libpthread.so.0]
+     0x00000001 (NEEDED)                     Shared library: [libc.so.6]
+     0x00000001 (NEEDED)                     Shared library: [ld.so.1]
+
+You can also [man ld.so] for other cute tricks you can play with glibc's dynamic linker.
+
+[main ld.so]: http://linux.die.net/man/8/ld.so

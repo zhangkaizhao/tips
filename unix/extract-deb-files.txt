@@ -1,0 +1,14 @@
+# extract .deb files
+
+via https://www.cyberciti.biz/faq/how-to-extract-a-deb-file-without-opening-it-on-debian-or-ubuntu-linux/
+
+A Debian or Ubuntu .deb package is nothing but old good Unix ar archive format.
+The ar command is used to keep together groups of files as a single archive and .deb includes the following three files:
+
+* debian-binary – A text file indicating the version of the .deb package format.
+* control.tar.gz – A compressed file and it contains md5sums and control directory for building package.
+* data.tar.xz – A compressed file and it contains all the files to be installed on your system.
+
+The syntax is:
+
+    ar x {file.deb}

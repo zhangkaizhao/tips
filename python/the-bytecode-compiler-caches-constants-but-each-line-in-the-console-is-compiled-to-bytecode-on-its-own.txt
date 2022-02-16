@@ -1,0 +1,47 @@
+# The bytecode compiler caches constants, but each line in the console is compiled to bytecode on its own
+
+https://twitter.com/pypyproject/status/1493274039342800900
+
+The PyPy Project https://twitter.com/pypyproject
+
+On PyPy the result is also True. 'is' done by value for ints.
+
+Side note, even on cpython the 2nd result is True, if you put the code into a file, not the shell.
+Why? Because the bytecode compiler caches constants, but each line in the console is compiled to bytecode on its own.
+
+2022-02-15 01:20
+
+---
+
+Which is a retweet of
+
+https://twitter.com/willmcgugan/status/1492155773232758787
+
+Will McGugan https://twitter.com/willmcgugan
+
+It’s interesting to know why this happens, but consider it a novelty of the Python implementation.
+Never rely on this kind of behaviour.
+
+2022-02-11 23:17
+
+---
+
+Which is a retweet of
+
+https://twitter.com/svpino/status/1492121257990516736
+
+Santiago https://twitter.com/svpino
+
+Guess the result.
+
+    >>> a = 256
+    >>> b = 256
+    >>> print(a is b)
+    True
+
+    >>> a = 300
+    >>> b = 300
+    >>> print(a is b)
+    # Result?
+
+2022-02-11 21:00

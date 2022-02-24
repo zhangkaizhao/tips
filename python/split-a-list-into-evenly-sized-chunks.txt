@@ -1,0 +1,32 @@
+# split a list into evenly sized chunks
+
+via https://twitter.com/nedbat/status/1496551872647376917
+
+How do you split a list into evenly sized chunks?
+
+    def chunks(lst, n):
+        """Yield successive n-sized chunks from lst."""
+        for i in range(0, len(lst), n):
+            yield lst[i:i + n]
+
+If you're using Python 2, you should use `xrange()` instead of `range()`.
+
+And the list comprehension version:
+
+    def chunks(lst, n):
+        return [lst[i:i + n] for i in range(0, len(lst), n)]
+
+
+Test with Python 3.x:
+
+    >>> import pprint
+    >>> pprint.pprint(list(chunks(range(10, 75), 10)))
+    [range(10, 20),
+     range(20, 30),
+     range(30, 40),
+     range(40, 50),
+     range(50, 60),
+     range(60, 70),
+     range(70, 75)]
+
+Reference: https://stackoverflow.com/a/312464/3449199

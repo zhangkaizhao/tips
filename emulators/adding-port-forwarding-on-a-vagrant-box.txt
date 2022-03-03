@@ -1,0 +1,20 @@
+# Adding port forwarding on a Vagrant box
+
+https://stackoverflow.com/a/52348660/3449199
+
+Another way to set up a temporary terminal, besides opening up the VirtualBox settings,
+is to use `vagrant ssh`, with additional arguments given after the `--`:
+
+    vagrant ssh -- -L 3000:localhost:3000
+
+This will forward port 3000 on the host to port 3000 on the guest.
+
+The first number is for the host. To forward port 7001 on the host to the default postgresql port on the guest:
+
+    vagrant ssh -- -L 7001:localhost:5432
+
+This will only last as long as your ssh session. If ssh gets disconnected, run it again.
+To make it persist after restarts, add it to your `Vagrantfile`.
+
+answered Sep 15, 2018 at 20:35
+Benjamin Atkin

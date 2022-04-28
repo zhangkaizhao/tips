@@ -1,0 +1,23 @@
+# Take a screenshot on your Mac
+
+https://support.apple.com/en-us/HT201361
+
+You can capture the entire screen, a window, or just a portion of the screen.
+
+## You can capture the entire screen, a window, or just a portion of the screen.
+
+<kbd>shift</kbd> + <kbd>command</kbd> + <kbd>3</kbd>
+
+## How to capture a portion of the screen
+
+<kbd>shift</kbd> + <kbd>command</kbd> + <kbd>4</kbd>
+
+## How to capture a window or menu
+
+<kbd>shift</kbd> + <kbd>command</kbd> + <kbd>4</kbd> + <kbd>Space bar</kbd>
+
+## Where to find screenshots
+
+By default, screenshots save to your desktop with the name ”Screen Shot [date] at [time].png.”
+
+In macOS Mojave or later, you can change the default location of saved screenshots from the Options menu in the Screenshot app. You can also drag the thumbnail to a folder or document.

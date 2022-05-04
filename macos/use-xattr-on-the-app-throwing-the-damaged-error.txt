@@ -1,0 +1,45 @@
+# Use xattr on the App Throwing the Damaged Error
+
+https://osxdaily.com/2019/02/13/fix-app-damaged-cant-be-opened-trash-error-mac/
+
+With the command line you can use xattr to view and remove extended attributes from a file on the Mac including the application throwing the “Appname.app is damaged and can’t be opened. You should move it to the Trash.” error message.
+
+Launch Terminal and then issue the following command:
+
+    xattr -cr /path/to/application.app
+
+For example:
+
+    xattr -cr /Applications/Signal.app
+
+The -c flag removes all attributes, whereas -r applies recursively for the entire targeted .app directory contents.
+
+----
+
+A real example:
+
+The Zulu JDK 17 file downloaded from https://cdn.azul.com/zulu/bin/zulu17.34.19-ca-jdk17.0.3-macosx_x64.tar.gz
+(via https://www.azul.com/downloads/?version=java-17-lts&os=macos&architecture=x86-64-bit&package=jdk )
+has this issue.
+
+    tar xf zulu17.34.19-ca-jdk17.0.3-macosx_x64.tar.gz
+    sudo cp -r zulu17.34.19-ca-jdk17.0.3-macosx_x64/zulu-17.jdk /Library/Java/JavaVirtualMachines/
+    /usr/libexec/java_home -V
+
+Now, run the xattr command as follow to get rid of "zulu-17.jdk is damaged..." error when calling `java` or `javac` from the installed Zulu JDK:
+
+    xattr -cr /Library/Java/JavaVirtualMachines/zulu-17.jdk
+
+----
+
+Another real example:
+
+The Sublime Merge zip file `sublime_merge_build_2071_mac.zip` downloaded from https://www.sublimemerge.com/download
+has this issue.
+
+    unzip sublime_merge_build_2071_mac.zip
+    mv Sublime\ Merge.app /Applications/
+
+Now, run the xattr command as follow to get rid of "Sublime Merge.app is damaged..." error when trying to launch it::
+
+    xattr -cr /Applications/Sublime\ Merge.app

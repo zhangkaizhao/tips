@@ -1,0 +1,46 @@
+# zig cc as CC for Rust compiler
+
+From https://actually.fyi/posts/zig-makes-rust-cross-compilation-just-work/
+
+First, add targets with rustup, e.g aarch64-apple-darwin:
+
+    rustup target add aarch64-apple-darwin
+
+Create a shell script which wraps zig cc, e.g. named as zig-cc-aarch64-macos:
+
+    #!/bin/sh
+    /path-to-zig/zig cc -target aarch64-macos $@
+
+Configure the linker for the target in the configuration of Cargo, e.g. edit default path in ~/.cargo/config :
+
+    [target.aarch64-apple-darwin]
+    linker = "/path-to-wrapper/zig-cc-aarch64-macos"
+
+Lastly, add it to env variables as CC when invoking cargo:
+
+    CC="/path-to-wrapper/zig-cc-aarch64-macos" cargo build --target aarch64-apple-darwin
+
+
+----
+
+Note: Targets for apple darwin can be built directly with cargo on macOS without cross compilation.
+
+----
+
+For a real example see https://github.com/zhangkaizhao/quick-doc-viewer/releases/tag/0.1.0
+
+The binaries are built in/with:
+
+    Darwin 21.4.0 x86_64
+    rustc 1.61.0 (fe5b13d68 2022-05-18)
+    zig 0.10.0-dev.2431+0e6285c8f
+
+successful:
+
+    x86_64-unknown-linux-gnu
+
+failed:
+
+    x86_64-unknown-linux-musl
+    x86_64-pc-windows-gnu
+    x86_64-pc-windows-msvc

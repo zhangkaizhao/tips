@@ -1,0 +1,18 @@
+# clang linking error of std headers and libraries for external clang/llvm
+
+issues:
+
+* https://github.com/llvm/llvm-project/issues/92260
+* https://github.com/Homebrew/homebrew-core/issues/45061
+* https://developer.apple.com/forums/thread/666700
+* ...
+
+workaround 1:
+
+Set `SDKROOT` environment variable to `/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk` to let clang find std header files e.g. `stdio.h`, and then use `clang` command line with `-L/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/lib` to let clang find std libraries.
+
+workaround 2:
+
+Use `clang` command line with `-isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk` and `-L /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/lib` to have the same effect.
+
+NOTE: The SDK path can be found via `$(xcrun --show-sdk-path)`.

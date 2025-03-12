@@ -1,0 +1,25 @@
+# usage of `extern crate`
+
+https://users.rust-lang.org/t/usage-of-extern-crate/73619/8
+
+Think of `extern crate` as a declaration inside your code that tells
+the compiler you want to link to another crate so you can use its
+functionality, kinda like the `-l` argument for `clang` or `gcc`.
+Whereas the `[dependencies]` section in `Cargo.toml` will orchestrate
+the downloading and building of your dependencies.
+
+Most of the time what your crate needs to link with can be inferred from
+your `Cargo.toml`, so in the 2018 edition it was decided to make this
+`extern crate` implicit to reduce the boilerplate needed to use a
+dependency and match intuition ("I've already added `foo` to my
+`Cargo.toml` so why do I also need to write `extern crate foo` at the
+top of my `lib.rs`?").
+
+However, some crates aren't present in your `Cargo.toml` because they
+are distributed with the Rust toolchain instead of being downloaded from
+crates.io. Some examples of these are the `std`, `alloc`, `core`, and
+`proc_macro` crates, although `extern crate std` will be injected
+automatically with the prelude. You can also do `extern crate rustc` to
+use the Rust compiler as a library, but that requires a
+`#![feature(rustc_private)]` because the compiler's internals are
+perma-unstable.

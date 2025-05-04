@@ -1,0 +1,222 @@
+# Simctl Cheatsheet
+
+https://www.testautomationstudio.com/cheat-sheet/simctl/simctl-cheatsheet/
+
+## Basics
+
+To list all available simulators.
+
+```
+xcrun simctl list
+```
+
+To create new simulator.
+
+```
+xcrun simctl create iphone-sim-14 com.apple.CoreSimulator.SimDeviceType.iPhone-14 com.apple.CoreSimulator.SimRuntime.iOS-16–3
+```
+
+To shut down a simulator
+
+```
+xcrun simctl shutdown AAAAAAAA–012D-3333-B444-DDDDDDDDDDDD
+```
+
+To erase the content.
+
+```
+xcrun simctl erase AAAAAAAA–012D-3333-B444-DDDDDDDDDDDD
+```
+
+To boot the simulator using new UUID.
+
+```
+xcrun simctl boot AAAAAAAA–012D-3333-B444-DDDDDDDDDDDD
+```
+
+To open simulator app.
+
+```
+open /Applications/Xcode.app/Contents/Developer/Applications/Simulator.app/
+```
+
+## Shutdown Simulator
+
+To shutdown last booted simulator.
+
+```
+xcrun simctl shutdown booted
+```
+
+To shutdown a simulator with name.
+
+```
+xcrun simctl shutdown "iPhone 14"
+```
+
+To shutdown all simulator
+
+```
+xcrun simctl shutdown all
+```
+
+## Erase Simulator contents
+
+To erase the content of simulator by UDID
+
+```
+xcrun simctl erase AAAAAAAA-BBBB-CCCC-DDDD-EEEEEEEEEE
+```
+
+To erase the contents of simulator by name
+
+```
+xcrun simctl erase "iPhone XS"
+```
+
+To erase the contents of all simulator.
+
+```
+xcrun simctl erase all
+```
+
+## Add media to simulator
+
+To add media to last booted simulator.
+
+```
+xcrun simctl addmedia booted ./video_01.mp4
+```
+
+To add media to a specific simulator.
+
+```
+xcrun simctl addmedia "iPhone XS" ./video_01.mp4
+```
+
+## Install App
+
+To install app on last booted simulator.
+
+```
+xcrun simctl install booted "./path/to/ios-app.app"
+```
+
+To install app on a specific simulator.
+
+```
+xcrun simctl install "iPhone XS Max" "./path/to/ios-app.app"
+```
+
+## Uninstall App
+
+To uninstall an app from last booted simulator.
+
+```
+xcrun simctl uninstall booted com.mycompany.myapp
+```
+
+To uninstall an app from specific simulator.
+
+```
+xcrun simctl uninstall "iPhone XS Max" com.mycompany.myapp
+```
+
+## Launch app
+
+To launch an app on last booted simulator.
+
+```
+xcrun simctl launch booted com.mycompany.myapp
+```
+
+To launch an app on specific device.
+
+```
+xcrun simctl launch "iPhone XS Max" com.mycompany.myapp
+```
+
+## Terminate app
+
+To terminate an app from last booted simulator.
+
+```
+xcrun simctl terminate booted com.mycompany.myapp
+```
+
+To terminate an app from a specific simulator.
+
+```
+xcrun simctl terminate "iPhone XS Max" com.mycompany.myapp
+```
+
+## Open URL
+
+To open a url on last booted simulator.
+
+```
+xcrun simctl openurl booted https://google.com
+```
+
+To open a url on specific simulator.
+
+```
+xcrun simctl openurl "iPhone XS Max" https://google.com
+```
+
+## Record simulator video
+
+To record video on last booted simulator.
+
+```
+xcrun simctl io booted recordVideo — type=mp4 ./simulator-record_001.mp4
+```
+
+To record video on specific simulator.
+
+```
+xcrun simctl io "iPhone XS Max" recordVideo — type=mp4 ./simulator-record_001.mp4
+```
+
+## Screenshot simulator
+
+To take screenshots on last booted simulator.
+
+```
+xcrun simctl io booted screenshot ./simulator-screenshot_001.png
+```
+
+To take screenshot on a specific simulator.
+
+```
+xcrun simctl io "iPhone XS Max" screenshot ./simulator-screenshot_001.png
+```
+
+## Push Notification to simulator
+
+To create a push notification on a simulator, create a file with `.apns` extension, and add the following code. Then drag and drop to the device.
+
+```
+{
+    "Simulator Target Bundle": "com.facebook.flipper",
+    "aps": {
+        "alert": "This is a simulated notification!",
+        "badge": 3,
+        "sound": "default"
+    }
+}
+```
+
+## Themes
+
+To switch the appearance style in a device to dark.
+
+```
+xcrun simctl ui booted appearance dark
+```
+
+To switch the appearance style in a device to light.
+
+```
+xcrun simctl ui booted appearance light
+```

@@ -1,0 +1,31 @@
+# merge and cut videos using ffmpeg
+
+## merge/concat videos
+
+```shell
+$ cat list.txt
+file 'video1.mp4'
+file 'video2.mp4'
+file 'video3.mp4'
+```
+
+```shell
+$ ffmpeg -f concat -i list.txt -c copy output.mp4
+```
+
+references:
+
+* https://trac.ffmpeg.org/wiki/Concatenate
+* https://www.baeldung.com/linux/ffmpeg-video-concatenation
+* https://superuser.com/questions/1059245/ffmpeg-join-two-mp4-files-with-ffmpeg-on-command-line
+
+## cut videos
+
+```shell
+$ ffmpeg -i my_video.mp4 -ss 00:00:15 -to 00:00:25 -c copy clip.mp4
+```
+
+references:
+
+* https://www.baeldung.com/linux/ffmpeg-cutting-videos
+* https://superuser.com/questions/138331/using-ffmpeg-to-cut-up-video

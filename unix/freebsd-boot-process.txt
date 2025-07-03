@@ -1,0 +1,60 @@
+# FreeBSD boot process
+
+via https://klarasystems.com/articles/the-freebsd-boot-process/
+
+> FreeBSD has several branching paths that lead to loading the FreeBSD kernel
+> and then passing the rest of the boot process to PID 1 - the init(8) system.
+> Which exact path it follows depends on system architecture, boot method,
+> partition scheme, and filesystem.
+
+```text
+BIOS/ MBR/UFS
+
+  +-> MBR from 'Boot Device' BIOS disk          | MBR
+    +-> boot0                                   | STAGE 0
+      +-> boot1                                 | STAGE 1
+        +-> boot2                               | STAGE 2
+          +-> loader                            | STAGE 3
+            +-> kernel                          | KERNEL
+              +-> init                          | INIT
+
+BIOS/ MBR/ZFS
+  +-> MBR from 'Boot Device' BIOS disk          | MBR
+    +-> boot0                                   | STAGE 0
+      +-> boot1                                 | STAGE 1
+        +-> zfsboot         | STAGE 2
+          +-> zfsloader    | STAGE 3
+            +-> kernel                          | KERNEL
+              +-> init                          | INIT
+
+BIOS/ GPT/UFS
+  +-> GPT from 'Boot Device' BIOS disk          | GPT
+    +-> pmbr                                    | STAGE 0
+      +-> gptboot                               | STAGE 1 + STAGE 2
+        +-> loader                              | STAGE 3
+          +-> kernel                            | KERNEL
+            +-> init                            | INIT
+
+BIOS/ GPT/ZFS
+  +-> GPT from 'Boot Device' BIOS disk          | GPT
+    +-> pmbr                                    | STAGE 0
+      +-> gptzfsboot                            | STAGE 1 + STAGE 2
+        +-> zfsloader (analogous to loader)     | STAGE 3
+          +-> kernel                            | KERNEL
+            +-> init                            | INIT
+
+UEFI/GPT/MBR/UFS/ZFS
+  +-> GPT/MBR from 'Boot Device' BIOS disk      | GPT/MBR
+    +-> UEFI                                    | STAGE 0
+      +-> boot1.efi (/efi/boot/boot${ARCH}.efi) | STAGE 1 + STAGE 2
+        +-> loader.efi                          | STAGE 3
+          +-> kernel                            | KERNEL
+            +-> init                            | INIT
+
+UEFI/GPT/MBR/UFS/ZFS (13.0 and later)
+  +-> GPT/MBR from 'Boot Device' BIOS disk      | GPT/MBR
+    +-> UEFI                                    | STAGE 0
+      +-> loader.efi (/efi/FreeBSD/loader.efi)  | STAGE 1-3
+        +-> kernel                              | KERNEL
+          +-> init                              | INIT
+```

@@ -1,0 +1,19 @@
+page up and down
+
+https://discussions.apple.com/thread/4167908?sortBy=rank
+
+---
+Aug 1, 2012 7:47 PM
+captfred:
+
+> The spacebar to page down, shift spacebar to page up.
+
+---
+Aug 1, 2012 10:50 PM
+markwmsn:
+
+> You can also use the "fn" key to modify the arrow keys:
+> fn+up = page up
+> fn+down = page-down
+> fn+left = top
+> fn+right = bottom

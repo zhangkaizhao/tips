@@ -1,0 +1,9 @@
+# unregister file associations of wpsoffice.app
+
+```shell
+$ /System/Library/Frameworks/CoreServices.framework/Frameworks/LaunchServices.framework/Support/lsregister -u /Applications/wpsoffice.app/
+```
+
+via <https://zhuanlan.zhihu.com/p/686544187> comment by <https://www.zhihu.com/people/mingritianya> 2015-06-16
+
+2025-11-15

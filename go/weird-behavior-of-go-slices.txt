@@ -1,0 +1,44 @@
+# weird behavior of Go slices
+
+Tested: Go 1.26.0
+
+https://lobste.rs/c/3dlnnr
+
+author: https://lobste.rs/~justinpombrio
+
+For example, you'd think that these x and y would be equivalent:
+
+```go
+x := []int{1, 2, 3}
+
+y := []int{1, 2}
+y = append(y, 3)
+
+fmt.Println(x, y)
+// [1 2 3] [1 2 3]
+```
+
+But here's how x behaves if you append a couple different things to it:
+
+```go
+x4 := append(x, 4)
+x5 := append(x, 5)
+fmt.Println(x4, x5)
+// [1 2 3 4] [1 2 3 5]
+```
+
+And here's how y behaves if you do exactly the same thing:
+
+```go
+y4 := append(y, 4)
+y5 := append(y, 5)
+fmt.Println(y4, y5)
+// [1 2 3 5] [1 2 3 5]
+```
+
+This behavior is sensitive to how Go slices pick their capacities. For example,
+the weirdness above doesn't happen if x and y are [1 2] instead of [1 2 3]. So
+your code is liable to do what you want for a while, until it gets an array of
+a slightly different size, and then it can start doing something different.
+
+https://go.dev/play/p/yzI1nMFT-II

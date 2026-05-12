@@ -1,0 +1,7 @@
+Test font:
+
+```
+pango-view --dpi=1024 --font=思源黑体 --annotate=glyph,layout,baselines -t A测试中文Test -o out.png
+```
+
+via https://blog.lilydjwg.me/2026/5/12/customize-my-default-chinese-font.217026.html

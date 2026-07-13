@@ -1,0 +1,74 @@
+# Disable Intel VMD without reinstalling Windows
+
+via https://scottiestech.info/2022/08/16/how-to-remove-intel-vmd-without-reinstalling-windows/
+
+2026-07-12
+
+First, create a System Restore point just to be safe in case anything goes wrong. To do that:
+
+1. Click the **Start** button
+2. Type: **system restore**
+3. Click: **Create a restore point**
+
+Next you’re going to remove the Intel VMD devices listed in Device Manager. You are NOT going to delete the drivers! If something goes wrong, you’ll need to revert your BIOS/UEFI back to VMD, so you may need them.
+
+So, first, click **Start** and type: **Device Manager**
+
+Open **Device Manager**, and scroll down to find **Storage controllers**:
+
+[image]
+
+If VMD is enabled, you should see several **Intel RST VMD…** entries.
+
+For each VMD entry, you must:
+
+1. Right-click it and choose **Uninstall device**
+2. In the popup window, make sure **Attempt to remove drivers…** is NOT checked!
+3. Click **Uninstall** button
+
+[image]
+
+Repeat for any other **RST VMD** entries…
+
+It will tell you to reboot, but **DO NOT REBOOT** yet!
+
+**Now the fun part: Enable Safe Mode**
+
+1. Click **Start**
+2. Type: **startup options**
+3. Click: **Change advanced startup options**
+4. Under **Advanced Startup**, click the **Restart now** button
+
+Your puter will reboot.
+
+At this point, you need to go into your BIOS/UEFI and disable VMD.
+
+Once the puter boots, you’ll see the **Choose an option** screen:
+
+[image]
+
+Click **Troubleshoot**, which will show you more options:
+
+[image]
+
+Choose **Startup Settings**, and then you’ll see this screen:
+
+[image]
+
+Yes, you’ll now click the **Restart** button during this needlessly complex series of operations just to boot into Safe Mode!
+
+Your computer will reboot AGAIN, and this time you’ll see this screen:
+
+[image]
+
+You’ll need to pick a **Safe Mode** option. Just tap the **4** key on your keyboard.
+
+Windows will – finally – boot into **Safe Mode**!
+
+**Once you’ve safely booted up, just restart the puter again.** Windows should boot normally.
+
+If you look in **Device Manager** again, you should see:
+
+[image]
+
+Ta-DA! You are now using the **Standard NVM Express Controller**.

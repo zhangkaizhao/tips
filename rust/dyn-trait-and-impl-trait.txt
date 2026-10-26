@@ -1,0 +1,81 @@
+# dyn Trait and impl Trait
+
+via https://users.rust-lang.org/t/difference-between-returning-dyn-box-trait-and-impl-trait/57640/3
+
+`dyn Trait` and `impl Trait` are different implementations of the same
+high-level idea of an "existential type". This means that in both cases, you
+get a single type, but how they are laid out in memory is different.
+
+`dyn Trait` is unsized (or, more accurately, dynamically-sized), which means
+that its size is not known at compile time. It's similar to a slice `[T]` in
+this regard. This means that you can only ever handle a `dyn Trait` behind some
+sort of pointer or indirection, like a reference `&dyn Trait` or an owning
+`Box<dyn Trait>`. It also employs **dynamic dispatch**, which means that the
+methods you call on a `dyn Trait` will go through a vtable and function
+pointers.
+
+This indirect nature of `dyn Trait` means that
+**it is a proper type in itself**, and that
+**the same `dyn Trait` can be created from multiple, distinct concrete types**.
+For example, you can do this:
+
+```rust
+use std::fmt::Display;
+
+fn foo(is_number: bool) -> Box<dyn Display> {
+    if is_number {
+        Box::new(42_u32)
+    } else {
+        Box::new(String::from("this is a string"))
+    }
+}
+```
+
+In contrast, **`impl Trait` is a completely static, compile-time-only construct**.
+The single, concrete type behind `impl Trait` is known to the compiler; it just
+hides it from the programmer intentionally. This means that an `impl Trait`
+created from a `Sized value` is also `Sized` and can be returned or passed by
+value, without any sort of indirection. It also uses static dispatch, so the
+functions you call on an `impl Trait` value are also known to the compiler at
+compile time.
+
+However, this has one important consequence: **a given `impl Trait` cannot be
+created from several, distinct types**. If you replace `Box<dyn Trait>` with
+`impl Trait` in the code above, [it won't compile anymore]. Or, to put it
+differently, `impl Trait` is not a proper type in itself, it's a placeholder
+for a concrete type which is known to the compiler, but not to the programmer.
+Therefore, you must treat it as a single type in a given context.
+
+> What would be the typical usage of one and the other?
+
+Well, it should be obvious from the above: they have different trade-offs.
+
+* Sometimes, you want dynamic dispatch, because you need function pointers and
+  vtables, and maybe you want to store heterogeneous values in a collection.
+  The prime example is HTTP handler functions in a webserver, corresponding to
+  different routes/paths. The routing logic of the web server usually needs to
+  store the various request handler functions in a central data structure, so
+  it will probably create something like a
+  `HashMap<String, Box<dyn FnMut(Request) -> Response>>` internally.
+* When you are building a data structure out of types that you don't
+  necessarily know upfront, you might also want to use `Box<dyn Trait>` instead
+  of making every type of the data structure generic. This can make its
+  manipulation easier on the programmer's eyes.
+* Trait objects can also be used for shaving off a couple of percents from the
+  compilation time, since they require less type wrangling in the internal
+  representation of the compiler as they avoid monomorphization.
+* In contrast, `impl Trait` is useful when you have a single, concrete type
+  that you want to hide for some reason, or if you are simply too lazy to type
+  it out (e.g. when it's a very complicated, nested `Iterator` adaptor).
+* impl Trait can also be used for returning closures, of which the type simply
+  cannot be named. impl Trait avoids heap allocation and is `Sized`, so it can
+  be more efficient and more convenient to work with in some cases.
+
+by [H2CO3](https://users.rust-lang.org/u/h2co3)
+on 2021-03-30
+
+[it won't compile anymore]: https://play.rust-lang.org/?version=stable&mode=debug&edition=2018&gist=0ede38635dc4e99f0c071d271f6db430
+
+Other references:
+
+* [dyn Trait and impl Trait in Rust](https://www.ncameron.org/blog/dyn-trait-and-impl-trait-in-rust/)
